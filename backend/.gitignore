@@ -1,0 +1,46 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Data files (optional - remove if using git for backup)
+# data/submissions.json
+
+# Temp files
+tmp/
+temp/
+*.tmp
+
+# Production build
+dist/
+build/

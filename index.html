@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dean by D'Zyne - Web & Software Development</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- HEADER -->
+        <header class="header">
+            <!-- Navigation -->
+            <nav class="navbar">
+                <div class="navbar-container">
+                    <div class="navbar-brand">
+                        <a href="#home" @click="scrollTo('home')" class="brand-link">
+                            <span class="logo-text">Dean by D'zyne</span>
+                        </a>
+                    </div>
+                    <ul class="nav-links">
+                        <li><a href="#services" @click="scrollTo('services')">Services</a></li>
+                        <li><a href="#portfolio" @click="scrollTo('portfolio')">Portfolio</a></li>
+                        <li><a href="#partners" @click="scrollTo('partners')">Our Partners</a></li>
+                        <li><a href="#about" @click="scrollTo('about')">About</a></li>
+                        <li><a href="#contact" @click="scrollTo('contact')">Contact</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Hero Section with Service Carousel -->
+            <section class="hero" id="home">
+                <div class="hero-container">
+                    <div class="hero-logo">
+                        <div class="logo-placeholder">D</div>
+                    </div>
+                    <div class="carousel-container">
+                        <div class="services-carousel">
+                            <div 
+                                v-for="(service, index) in services" 
+                                :key="index"
+                                :class="['carousel-item', { active: currentServiceIndex === index }]"
+                                :style="getCarouselAnimation(index)"
+                            >
+                                <div class="service-badge">
+                                    <h3>{{ service.name }}</h3>
+                                    <p>{{ service.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-controls">
+                            <button @click="previousService" class="carousel-btn prev">❮</button>
+                            <button @click="nextService" class="carousel-btn next">❯</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </header>
+
+        <!-- SERVICES SECTION -->
+        <section class="services" id="services">
+            <div class="container">
+                <h2 class="section-title">Our Services</h2>
+                
+                <!-- Digital Integration -->
+                <div class="service-category">
+                    <h3 class="service-category-title">Digital Integration</h3>
+                    <p class="service-description">Maximize your online presence across all platforms</p>
+                    <div class="service-grid">
+                        <div v-for="item in digitalIntegration" :key="item" class="service-item">
+                            <div class="service-icon">📱</div>
+                            <p>{{ item }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Website Development -->
+                <div class="service-category">
+                    <h3 class="service-category-title">Websites Development</h3>
+                    <p class="service-description">"We build user-friendly, engaging, responsive, and cutting-edge websites that elevate your online presence and drive business growth."</p>
+                    <div class="service-features">
+                        <div class="feature-badge">UI/UX Design</div>
+                        <div class="feature-badge">Front End</div>
+                        <div class="feature-badge">Back End</div>
+                    </div>
+                </div>
+
+                <!-- Software Development -->
+                <div class="service-category">
+                    <h3 class="service-category-title">Software Development</h3>
+                    <p class="service-description">We focus on creating Software & Web Apps that prioritize user experience, are visually appealing, adaptable to various devices, and incorporate the latest design and technology trends.</p>
+                    <div class="service-grid">
+                        <div v-for="item in softwareDevelopment" :key="item" class="service-item">
+                            <div class="service-icon">💻</div>
+                            <p>{{ item }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO SECTION -->
+        <section class="portfolio" id="portfolio">
+            <div class="container">
+                <h2 class="section-title">Portfolio</h2>
+                <p class="portfolio-intro">Showcase of recent projects and case studies</p>
+                
+                <div class="portfolio-grid">
+                    <div v-for="project in portfolioProjects" :key="project.id" class="portfolio-card">
+                        <div class="portfolio-image" :style="{ backgroundColor: project.color }">
+                            <span class="project-icon">{{ project.icon }}</span>
+                        </div>
+                        <h3>{{ project.name }}</h3>
+                        <p class="project-description">{{ project.description }}</p>
+                        <div class="project-tags">
+                            <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
+                        </div>
+                        <a v-if="project.link" :href="project.link" target="_blank" class="project-link">View Project →</a>
+                    </div>
+                </div>
+
+                <div class="portfolio-cta">
+                    <p>See more of our work on GitHub</p>
+                    <a href="https://github.com" target="_blank" class="btn-primary">Visit GitHub Repository</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARTNERS SECTION -->
+        <section class="partners" id="partners">
+            <div class="container">
+                <h2 class="section-title">Our Partners</h2>
+                <p class="partners-intro">Our partnerships are rooted in a shared commitment to delivering quality and result-driven eco-system friendly solutions.</p>
+                
+                <div class="partners-carousel">
+                    <div 
+                        v-for="(partner, index) in partners" 
+                        :key="index"
+                        :class="['partner-card', { active: currentPartnerIndex === index }]"
+                        @click="selectPartner(index)"
+                    >
+                        <div class="partner-logo-placeholder">{{ partner.initials }}</div>
+                        <h4>{{ partner.name }}</h4>
+                        <p>{{ partner.description }}</p>
+                        <div class="partner-links">
+                            <a v-if="partner.website" :href="partner.website" target="_blank" class="social-link">🌐</a>
+                            <a v-if="partner.linkedin" :href="partner.linkedin" target="_blank" class="social-link">👔</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section class="about" id="about">
+            <div class="container">
+                <h2 class="section-title">About Us</h2>
+                <div class="about-content">
+                    <p>Web and backend developer building practical, user-focused software. Experience across websites and offline-first business applications.</p>
+                    <div class="qualities">
+                        <div class="quality">
+                            <span class="quality-icon">✨</span>
+                            <h4>Elegant Aesthetics</h4>
+                            <p>Sophisticated design with confident, flexible dynamic elements</p>
+                        </div>
+                        <div class="quality">
+                            <span class="quality-icon">🎨</span>
+                            <h4>Clean & Honest</h4>
+                            <p>Transparent, straightforward solutions that users can trust</p>
+                        </div>
+                        <div class="quality">
+                            <span class="quality-icon">🚀</span>
+                            <h4>Resilient</h4>
+                            <p>Reliable, scalable applications built to last</p>
+                        </div>
+                        <div class="quality">
+                            <span class="quality-icon">😊</span>
+                            <h4>Fun & Playful</h4>
+                            <p>Delightful touches that make the experience enjoyable</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <footer class="footer" id="contact">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="footer-content">
+                    <div class="contact-section">
+                        <div class="contact-info">
+                            <h3>Contact Details</h3>
+                            <div class="contact-item">
+                                <span class="contact-icon">📧</span>
+                                <div>
+                                    <p class="label">Email</p>
+                                    <a href="mailto:hello@deanby-dzyne.com">hello@deanby-dzyne.com</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-icon">📞</span>
+                                <div>
+                                    <p class="label">Phone</p>
+                                    <a href="tel:+1234567890">+1 (234) 567-890</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-icon">📍</span>
+                                <div>
+                                    <p class="label">Business Address</p>
+                                    <p>Your City, Country</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-icon">⏰</span>
+                                <div>
+                                    <p class="label">Response Time</p>
+                                    <p>Within 24 hours</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-form">
+                            <h3>Send us a Message</h3>
+                            <form @submit.prevent="submitForm">
+                                <div class="form-group">
+                                    <input 
+                                        v-model="formData.name" 
+                                        type="text" 
+                                        placeholder="Your Name" 
+                                        class="form-input"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <input 
+                                        v-model="formData.email" 
+                                        type="email" 
+                                        placeholder="Your Email" 
+                                        class="form-input"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <input 
+                                        v-model="formData.subject" 
+                                        type="text" 
+                                        placeholder="Subject" 
+                                        class="form-input"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <textarea 
+                                        v-model="formData.message" 
+                                        placeholder="Your Message" 
+                                        class="form-textarea"
+                                        rows="5"
+                                        required
+                                    ></textarea>
+                                </div>
+                                <button type="submit" class="btn-submit">Send Message</button>
+                                <p v-if="formSuccess" class="form-success">✓ Message sent successfully!</p>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <h3>Follow Us</h3>
+                        <p class="social-intro">Connect with us on social media</p>
+                        <div class="social-icons">
+                            <a href="https://linkedin.com" target="_blank" class="social-icon" title="LinkedIn">in</a>
+                            <a href="https://tiktok.com" target="_blank" class="social-icon" title="TikTok">♪</a>
+                            <a href="https://facebook.com" target="_blank" class="social-icon" title="Facebook">f</a>
+                            <a href="https://instagram.com" target="_blank" class="social-icon" title="Instagram">📷</a>
+                            <a href="https://twitter.com" target="_blank" class="social-icon" title="Twitter">𝕏</a>
+                            <a href="https://whatsapp.com" target="_blank" class="social-icon" title="WhatsApp">💬</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Dean by D'Zyne. All rights reserved.</p>
+                    <p class="footer-tagline">Building beautiful solutions for real problems.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Vue.js 3 from CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Anime.js for advanced animations -->
+    <script src="https://animejs.com/lib/anime.min.js"></script>
+    <!-- Main application script -->
+    <script src="js/app.js"></script>
+</body>
+</html>

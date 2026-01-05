@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dean by D'Zyne - Web & Software Development</title>
+    <title>DEAN BY D'ZYNE - Web & Software Development</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -15,12 +15,12 @@
                 <div class="navbar-container">
                     <div class="navbar-brand">
                         <a href="#home" @click="scrollTo('home')" class="brand-link">
-                            <span class="logo-text">Dean by D'zyne</span>
+                            <span class="logo-text">DEAN BY D'ZYNE</span>
                         </a>
                     </div>
                     <ul class="nav-links">
                         <li><a href="#services" @click="scrollTo('services')">Services</a></li>
-                        <li><a href="#portfolio" @click="scrollTo('portfolio')">Portfolio</a></li>
+                        <li><a href="https://github.com/WildXhild" target="_blank">Portfolio</a></li>
                         <li><a href="#partners" @click="scrollTo('partners')">Our Partners</a></li>
                         <li><a href="#about" @click="scrollTo('about')">About</a></li>
                         <li><a href="#contact" @click="scrollTo('contact')">Contact</a></li>
@@ -28,44 +28,90 @@
                 </div>
             </nav>
 
-            <!-- Hero Section with Service Carousel -->
+            <!-- Hero Section with Logo and Marquee -->
             <section class="hero" id="home">
                 <div class="hero-container">
                     <div class="hero-logo">
-                        <div class="logo-placeholder">D</div>
+                        <img src="Images/LOGO.png" alt="DEAN BY D'ZYNE Logo" class="logo-image" style="width: 200px; height: 200px; border-radius: 20px; box-shadow: 0 10px 40px rgba(34, 69, 96, 0.3); animation: floatAnimation 3s ease-in-out infinite;">
                     </div>
-                    <div class="carousel-container">
-                        <div class="services-carousel">
-                            <div 
-                                v-for="(service, index) in services" 
-                                :key="index"
-                                :class="['carousel-item', { active: currentServiceIndex === index }]"
-                                :style="getCarouselAnimation(index)"
-                            >
-                                <div class="service-badge">
-                                    <h3>{{ service.name }}</h3>
-                                    <p>{{ service.description }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-controls">
-                            <button @click="previousService" class="carousel-btn prev">❮</button>
-                            <button @click="nextService" class="carousel-btn next">❯</button>
-                        </div>
+                </div>
+                
+                <!-- Services Marquee -->
+                <div class="marquee-wrapper">
+                    <div class="marquee-content">
+                        <span 
+                            v-for="(service, index) in allMarqueeServices" 
+                            :key="'original-' + index"
+                            :class="['marquee-item', `marquee-item-${index}`]"
+                            :style="getMarqueeStyle(index)"
+                        >
+                            {{ service }}
+                        </span>
+                        <span 
+                            v-for="(service, index) in allMarqueeServices" 
+                            :key="'duplicate-' + index"
+                            :class="['marquee-item', `marquee-item-${index}`]"
+                            :style="getMarqueeStyle(index)"
+                        >
+                            {{ service }}
+                        </span>
+                        <span 
+                            v-for="(service, index) in allMarqueeServices" 
+                            :key="'duplicate2-' + index"
+                            :class="['marquee-item', `marquee-item-${index}`]"
+                            :style="getMarqueeStyle(index)"
+                        >
+                            {{ service }}
+                        </span>
                     </div>
                 </div>
             </section>
         </header>
 
+        <!-- PARTNERS SECTION -->
+        <section class="partners" id="partners">
+            <div class="partners-full-width">
+                <div class="partners-header">
+                    <h2 class="section-title partners-title-with-lines">Our Partners</h2>
+                    <p class="partners-intro">Our partnerships are rooted in a shared commitment to delivering quality and result-driven eco-system friendly solutions.</p>
+                </div>
+                
+                <div class="partners-marquee-wrapper">
+                    <div class="partners-marquee">
+                        <div v-for="(partner, index) in partners" :key="'original-' + index" class="partner-item">
+                            <div class="partner-card-new" :style="{ backgroundColor: partner.bgColor }">
+                                <div class="partner-image-new" :style="{ backgroundImage: `url('${partner.image}')` }"></div>
+                                <div class="partner-info">
+                                    <h4>{{ partner.name }}</h4>
+                                    <p>{{ partner.description }}</p>
+                                    <a v-if="partner.website" :href="partner.website" target="_blank" class="partner-website-link">Visit Website →</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-for="(partner, index) in partners" :key="'duplicate-' + index" class="partner-item">
+                            <div class="partner-card-new" :style="{ backgroundColor: partner.bgColor }">
+                                <div class="partner-image-new" :style="{ backgroundImage: `url('${partner.image}')` }"></div>
+                                <div class="partner-info">
+                                    <h4>{{ partner.name }}</h4>
+                                    <p>{{ partner.description }}</p>
+                                    <a v-if="partner.website" :href="partner.website" target="_blank" class="partner-website-link">Visit Website →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- SERVICES SECTION -->
         <section class="services" id="services">
             <div class="container">
-                <h2 class="section-title">Our Services</h2>
+                <h2 class="section-title services-title-with-lines">Our Services</h2>
                 
                 <!-- Digital Integration -->
                 <div class="service-category">
                     <h3 class="service-category-title">Digital Integration</h3>
-                    <p class="service-description">Maximize your online presence across all platforms</p>
+                    <p class="service-description">Maximize Your Online Presence across All Platforms</p>
                     <div class="service-grid">
                         <div v-for="item in digitalIntegration" :key="item" class="service-item">
                             <div class="service-icon">📱</div>
@@ -77,7 +123,7 @@
                 <!-- Website Development -->
                 <div class="service-category">
                     <h3 class="service-category-title">Websites Development</h3>
-                    <p class="service-description">"We build user-friendly, engaging, responsive, and cutting-edge websites that elevate your online presence and drive business growth."</p>
+                    <p class="service-description">"We Build User-friendly, Engaging, Responsive, and Cutting-edge Websites that Elevate Your Online Presence and Drive Business Growth."</p>
                     <div class="service-features">
                         <div class="feature-badge">UI/UX Design</div>
                         <div class="feature-badge">Front End</div>
@@ -88,63 +134,11 @@
                 <!-- Software Development -->
                 <div class="service-category">
                     <h3 class="service-category-title">Software Development</h3>
-                    <p class="service-description">We focus on creating Software & Web Apps that prioritize user experience, are visually appealing, adaptable to various devices, and incorporate the latest design and technology trends.</p>
+                    <p class="service-description">We Focus on Creating Software & Web Apps that Prioritize User Experience, are Visually Appealing, Adaptable to Various Devices, and Incorporate the Latest Design and Technology Trends.</p>
                     <div class="service-grid">
-                        <div v-for="item in softwareDevelopment" :key="item" class="service-item">
-                            <div class="service-icon">💻</div>
+                        <div v-for="(item, index) in softwareDevelopment" :key="item" class="service-item software-dev-item">
+                            <div class="service-icon"><img :src="getSoftwareDevIcon(item)" :alt="item + ' icon'" class="icon-image"></div>
                             <p>{{ item }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PORTFOLIO SECTION -->
-        <section class="portfolio" id="portfolio">
-            <div class="container">
-                <h2 class="section-title">Portfolio</h2>
-                <p class="portfolio-intro">Showcase of recent projects and case studies</p>
-                
-                <div class="portfolio-grid">
-                    <div v-for="project in portfolioProjects" :key="project.id" class="portfolio-card">
-                        <div class="portfolio-image" :style="{ backgroundColor: project.color }">
-                            <span class="project-icon">{{ project.icon }}</span>
-                        </div>
-                        <h3>{{ project.name }}</h3>
-                        <p class="project-description">{{ project.description }}</p>
-                        <div class="project-tags">
-                            <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
-                        </div>
-                        <a v-if="project.link" :href="project.link" target="_blank" class="project-link">View Project →</a>
-                    </div>
-                </div>
-
-                <div class="portfolio-cta">
-                    <p>See more of our work on GitHub</p>
-                    <a href="https://github.com" target="_blank" class="btn-primary">Visit GitHub Repository</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- PARTNERS SECTION -->
-        <section class="partners" id="partners">
-            <div class="container">
-                <h2 class="section-title">Our Partners</h2>
-                <p class="partners-intro">Our partnerships are rooted in a shared commitment to delivering quality and result-driven eco-system friendly solutions.</p>
-                
-                <div class="partners-carousel">
-                    <div 
-                        v-for="(partner, index) in partners" 
-                        :key="index"
-                        :class="['partner-card', { active: currentPartnerIndex === index }]"
-                        @click="selectPartner(index)"
-                    >
-                        <div class="partner-logo-placeholder">{{ partner.initials }}</div>
-                        <h4>{{ partner.name }}</h4>
-                        <p>{{ partner.description }}</p>
-                        <div class="partner-links">
-                            <a v-if="partner.website" :href="partner.website" target="_blank" class="social-link">🌐</a>
-                            <a v-if="partner.linkedin" :href="partner.linkedin" target="_blank" class="social-link">👔</a>
                         </div>
                     </div>
                 </div>
@@ -156,17 +150,17 @@
             <div class="container">
                 <h2 class="section-title">About Us</h2>
                 <div class="about-content">
-                    <p>Web and backend developer building practical, user-focused software. Experience across websites and offline-first business applications.</p>
+                    <p>Front-End/Back-End Developer Building Practical, User-focused Software, Websites & Web-AppS. ExperienceD across Websites and Offline-First Business Applications.</p>
                     <div class="qualities">
                         <div class="quality">
                             <span class="quality-icon">✨</span>
                             <h4>Elegant Aesthetics</h4>
-                            <p>Sophisticated design with confident, flexible dynamic elements</p>
+                            <p>Sophisticated Design with Confident, Flexible Dynamic Elements</p>
                         </div>
                         <div class="quality">
                             <span class="quality-icon">🎨</span>
                             <h4>Clean & Honest</h4>
-                            <p>Transparent, straightforward solutions that users can trust</p>
+                            <p>Transparent, Straightforward Solutions that Users Can Trust</p>
                         </div>
                         <div class="quality">
                             <span class="quality-icon">🚀</span>
@@ -195,21 +189,21 @@
                                 <span class="contact-icon">📧</span>
                                 <div>
                                     <p class="label">Email</p>
-                                    <a href="mailto:hello@deanby-dzyne.com">hello@deanby-dzyne.com</a>
+                                    <a href="mailto:deanbydzyne@gmail.com">deanbydzyne@gmail.com</a>
                                 </div>
                             </div>
                             <div class="contact-item">
                                 <span class="contact-icon">📞</span>
                                 <div>
                                     <p class="label">Phone</p>
-                                    <a href="tel:+1234567890">+1 (234) 567-890</a>
+                                    <a href="tel:+2348143824044">+234 (814) 382-4044</a>
                                 </div>
                             </div>
                             <div class="contact-item">
                                 <span class="contact-icon">📍</span>
                                 <div>
                                     <p class="label">Business Address</p>
-                                    <p>Your City, Country</p>
+                                    <p>Ikeja, Lagos, Nigeria</p>
                                 </div>
                             </div>
                             <div class="contact-item">
@@ -270,12 +264,12 @@
                         <h3>Follow Us</h3>
                         <p class="social-intro">Connect with us on social media</p>
                         <div class="social-icons">
-                            <a href="https://linkedin.com" target="_blank" class="social-icon" title="LinkedIn">in</a>
-                            <a href="https://tiktok.com" target="_blank" class="social-icon" title="TikTok">♪</a>
-                            <a href="https://facebook.com" target="_blank" class="social-icon" title="Facebook">f</a>
-                            <a href="https://instagram.com" target="_blank" class="social-icon" title="Instagram">📷</a>
-                            <a href="https://twitter.com" target="_blank" class="social-icon" title="Twitter">𝕏</a>
-                            <a href="https://whatsapp.com" target="_blank" class="social-icon" title="WhatsApp">💬</a>
+                            <a href="https://www.linkedin.com/in/dean-ubi-15a622391/?trk=PROFILE_DROP_DOWN" target="_blank" class="social-icon" title="LinkedIn">in</a>
+                            <a href="https://www.threads.com/@dean_by_d_zyne" target="_blank" class="social-icon" title="Threads">📱</a>
+                            <a href="https://web.facebook.com/deanbydzyne/" target="_blank" class="social-icon" title="Facebook">f</a>
+                            <a href="https://www.instagram.com/dean_by_d_zyne" target="_blank" class="social-icon" title="Instagram">📷</a>
+                            <a href="https://x.com/Dean_by_Dzyne" target="_blank" class="social-icon" title="X">𝕏</a>
+                            <a href="https://wa.me/2347042313979" target="_blank" class="social-icon" title="WhatsApp">💬</a>
                         </div>
                     </div>
                 </div>

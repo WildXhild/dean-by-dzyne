@@ -7,12 +7,16 @@ createApp({
             currentPartnerIndex: 0,
             autoRotateInterval: null,
             formSuccess: false,
+            marqueeAnimations: {},
             formData: {
                 name: '',
                 email: '',
                 subject: '',
                 message: ''
             },
+            
+            // All services for marquee - combined from all service categories
+            allMarqueeServices: [],
             
             // Services for carousel
             services: [
@@ -49,6 +53,13 @@ createApp({
                 'WhatsApp Business Setup',
                 'Local SEO Optimization'
             ],
+
+            // Website Development services
+            websiteDevelopment: [
+                'UI/UX Design',
+                'Front End',
+                'Back End'
+            ],
             
             // Software Development services
             softwareDevelopment: [
@@ -62,39 +73,32 @@ createApp({
             // Partners
             partners: [
                 {
-                    name: 'Tech Partner Co.',
-                    initials: 'TP',
-                    description: 'Leading technology solutions provider specializing in cloud infrastructure',
-                    website: 'https://example.com',
-                    linkedin: 'https://linkedin.com/company/tech-partner'
+                    name: 'OYO VIBES CARTEL',
+                    image: 'Images/ovc.png',
+                    bgColor: '#5DADE2',
+                    description: 'Strategic partnership with MediaHead Entertainment in creation of Oyo Vibes Cartel, A party host and publication website, that partners with events centres to publicize information about the hottest parties and social events in Oyo. Also hosts the wildest parties.',
+                    website: 'https://example.com'
                 },
                 {
-                    name: 'Design Studios',
-                    initials: 'DS',
-                    description: 'Creative design agency focusing on brand identity and visual storytelling',
-                    website: 'https://example.com',
-                    linkedin: 'https://linkedin.com/company/design-studios'
+                    name: 'MEMOIRS OF WILDXHILD',
+                    image: 'Images/Wildchild.jpg',
+                    bgColor: '#2C3E50',
+                    description: 'In partnership with WIldXhild; Performing Artist, Writer, Script Writer, Author & Poet in the creation of artist website for booking and display of his projects.',
+                    website: 'https://example.com'
                 },
                 {
-                    name: 'Business Consulting',
-                    initials: 'BC',
-                    description: 'Strategy and business development consultants for growth',
-                    website: 'https://example.com',
-                    linkedin: 'https://linkedin.com/company/business-consulting'
+                    name: 'FURBABY HAVEN KENNELS',
+                    image: 'Images/furbaby%20logo1.png',
+                    bgColor: '#007ACC',
+                    description: 'Static business website for display and sales of English Bulldog Puppies, Based in Texas Houston.',
+                    website: 'https://furbabykennels.site'
                 },
                 {
-                    name: 'Marketing Solutions',
-                    initials: 'MS',
-                    description: 'Digital marketing experts driving customer engagement and conversions',
-                    website: 'https://example.com',
-                    linkedin: 'https://linkedin.com/company/marketing-solutions'
-                },
-                {
-                    name: 'SEO Specialists',
-                    initials: 'SS',
-                    description: 'Search optimization experts improving online visibility and rankings',
-                    website: 'https://example.com',
-                    linkedin: 'https://linkedin.com/company/seo-specialists'
+                    name: 'PBA-CSV',
+                    image: 'Images/pba%20csv.jpg',
+                    bgColor: '#1A1A2E',
+                    description: 'Strategic partnership with fintech online payment portals and card providers to provide a secure, modular JavaScript/TypeScript solution for retrieving, displaying, and exporting payment billing address and card details with AES-256-GCM encryption and PBKDF2 key derivation.',
+                    website: 'https://github.com/WildXhild/PBA-CSV'
                 }
             ],
 
@@ -159,6 +163,22 @@ createApp({
     },
     
     methods: {
+        // Marquee animation style generator
+        getMarqueeStyle(index) {
+            const delays = [0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8];
+            const durations = [4, 5, 5.5, 4.5, 6, 4.2, 5.8, 4.8, 5.2, 4.6];
+            const animations = ['marqueeSlide', 'marqueeBounce', 'marqueeFloat', 'marqueeBounceInOut', 'marqueeZoomInOut', 'marqueeWiggle', 'marqueeSpinSlide', 'marqueeSlide'];
+            
+            const delay = delays[index % delays.length];
+            const duration = durations[index % durations.length];
+            const animation = animations[index % animations.length];
+            
+            return {
+                animation: `${animation} ${duration}s ease-in-out ${delay}s infinite`,
+                animationDelay: `${delay}s`
+            };
+        },
+
         // Carousel navigation
         nextService() {
             this.currentServiceIndex = (this.currentServiceIndex + 1) % this.services.length;
@@ -178,6 +198,18 @@ createApp({
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
             }
+        },
+        
+        // Map software development services to their icons
+        getSoftwareDevIcon(serviceName) {
+            const iconMap = {
+                'Mobile Apps': 'Images/Mobile-Apps.gif',
+                'Web Applications': 'Images/Web-Applications.gif',
+                'Desktop Software': 'Images/Desktop-Software.gif',
+                'Progressive Web Apps': 'Images/Progressive-Web-Apps.gif',
+                'Cloud Solutions': 'Images/Cloud-Solutions.gif'
+            };
+            return iconMap[serviceName] || 'Images/laptop icon.png';
         },
         
         // Get animation style for carousel
@@ -251,10 +283,45 @@ createApp({
                 submitButton.disabled = false;
                 submitButton.textContent = originalText;
             });
+        },
+        
+        initStickyFooter() {
+            const footer = document.querySelector('.footer');
+            if (!footer) return;
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            observer.observe(footer);
         }
     },
     
     mounted() {
+        
+        // Populate marquee with all services
+        this.allMarqueeServices = [
+            'Digital Integration',
+            ...this.digitalIntegration,
+            'Websites Development',
+            ...this.websiteDevelopment,
+            'Software Development',
+            ...this.softwareDevelopment,
+            'Elegant Aesthetics',
+            'Clean & Honest',
+            'Resilient',
+            'Fun & Playful'
+        ];
+        
         // Start auto-rotation when component mounts
         this.startAutoRotate();
         
@@ -263,6 +330,9 @@ createApp({
         
         // Add parallax effect to hero section
         this.addParallaxEffect();
+        
+        // Initialize sticky footer reveal animation
+        this.initStickyFooter();
     },
     
     beforeUnmount() {

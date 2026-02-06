@@ -2025,10 +2025,10 @@ h4 {
     align-items: center;
     gap: 1rem;
     padding: 0.85rem 1.5rem;
-    color: #f0f4f8;
+    color: #e8ebe5;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
+    font-weight: 700;
+    font-size: 1.05rem;
     transition: all var(--transition-fast);
     width: 100%;
     box-sizing: border-box;
@@ -2223,8 +2223,9 @@ h4 {
 
     .floating-nav-item a {
         padding: 0.75rem 1.2rem;
-        font-size: 0.9rem;
+        font-size: 0.98rem;
         gap: 0.85rem;
+        font-weight: 700;
     }
 
     .floating-chat-widget {
@@ -2299,8 +2300,9 @@ h4 {
 
     .floating-nav-item a {
         padding: 0.65rem 0.9rem;
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         gap: 0.7rem;
+        font-weight: 700;
     }
 
     .floating-chat-widget {

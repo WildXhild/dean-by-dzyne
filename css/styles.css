@@ -1963,7 +1963,7 @@ h4 {
     font-size: 1.8rem;
     cursor: pointer;
     box-shadow: 0 4px 20px rgba(139, 77, 184, 0.4);
-    z-index: 998;
+    z-index: 1001;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1987,7 +1987,7 @@ h4 {
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    z-index: 997;
+    z-index: 1000;
     min-width: 200px;
     opacity: 0;
     visibility: hidden;
@@ -2056,7 +2056,7 @@ h4 {
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    z-index: 996;
+    z-index: 999;
     display: flex;
     flex-direction: column;
     transition: all var(--transition-normal);

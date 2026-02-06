@@ -1983,16 +1983,17 @@ h4 {
     position: fixed;
     top: 7rem;
     right: 1.5rem;
-    background: white;
+    background: linear-gradient(180deg, #0f1e2a 0%, #0a1419 100%);
     border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(139, 77, 184, 0.3);
     overflow: hidden;
     z-index: 1000;
-    min-width: 200px;
+    min-width: 220px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px) scale(0.95);
     transition: all var(--transition-normal);
+    border: 1px solid rgba(139, 77, 184, 0.35);
 }
 
 .floating-nav-menu.active {
@@ -2003,7 +2004,7 @@ h4 {
 
 .floating-nav-items {
     list-style: none;
-    padding: 0;
+    padding: 0.5rem 0;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -2012,25 +2013,46 @@ h4 {
 .floating-nav-item {
     padding: 0;
     margin: 0;
+    border-bottom: 1px solid rgba(139, 77, 184, 0.15);
+}
+
+.floating-nav-item:last-child {
+    border-bottom: none;
 }
 
 .floating-nav-item a {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 1.5rem;
-    color: var(--color-darkest);
+    gap: 1rem;
+    padding: 0.85rem 1.5rem;
+    color: #f0f4f8;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 0.95rem;
     transition: all var(--transition-fast);
-    border-left: 3px solid transparent;
     width: 100%;
     box-sizing: border-box;
+    position: relative;
+}
+
+.floating-nav-item a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--color-accent-purple);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform var(--transition-fast);
 }
 
 .floating-nav-item a .icon {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     flex-shrink: 0;
+    transition: transform var(--transition-fast);
+    filter: brightness(1.2);
 }
 
 .floating-nav-item a span:last-child {
@@ -2038,9 +2060,18 @@ h4 {
 }
 
 .floating-nav-item a:hover {
-    background-color: rgba(139, 77, 184, 0.08);
-    border-left-color: var(--color-accent-purple);
+    background: linear-gradient(90deg, rgba(139, 77, 184, 0.35) 0%, rgba(139, 77, 184, 0.15) 100%);
+    color: #ffffff;
     padding-left: 1.8rem;
+}
+
+.floating-nav-item a:hover::before {
+    transform: scaleY(1);
+}
+
+.floating-nav-item a:hover .icon {
+    transform: scale(1.2);
+    filter: brightness(1.4);
 }
 
 /* ========================================
@@ -2191,7 +2222,9 @@ h4 {
     }
 
     .floating-nav-item a {
-        padding: 0.85rem 1.2rem;
+        padding: 0.75rem 1.2rem;
+        font-size: 0.9rem;
+        gap: 0.85rem;
     }
 
     .floating-chat-widget {
@@ -2265,8 +2298,9 @@ h4 {
     }
 
     .floating-nav-item a {
-        padding: 0.75rem 1rem;
-        font-size: 0.9rem;
+        padding: 0.65rem 0.9rem;
+        font-size: 0.85rem;
+        gap: 0.7rem;
     }
 
     .floating-chat-widget {

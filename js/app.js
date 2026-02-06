@@ -9,7 +9,7 @@ createApp({
             formSuccess: false,
             marqueeAnimations: {},
             showNavMenu: false,
-            chatMinimized: false,
+            chatMinimized: true,
             formData: {
                 name: '',
                 email: '',

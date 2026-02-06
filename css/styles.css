@@ -2020,7 +2020,7 @@ h4 {
     border-bottom: none;
 }
 
-.floating-nav-item a {
+.floating-nav-item {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -2035,7 +2035,7 @@ h4 {
     position: relative;
 }
 
-.floating-nav-item a::before {
+.floating-nav-item::before {
     content: '';
     position: absolute;
     left: 0;
@@ -2048,28 +2048,28 @@ h4 {
     transition: transform var(--transition-fast);
 }
 
-.floating-nav-item a .icon {
+.floating-nav-item .icon {
     font-size: 1.3rem;
     flex-shrink: 0;
     transition: transform var(--transition-fast);
     filter: brightness(1.2);
 }
 
-.floating-nav-item a span:last-child {
+.floating-nav-item span:last-child {
     flex: 1;
 }
 
-.floating-nav-item a:hover {
+.floating-nav-item:hover {
     background: linear-gradient(90deg, rgba(139, 77, 184, 0.35) 0%, rgba(139, 77, 184, 0.15) 100%);
     color: #ffffff;
     padding-left: 1.8rem;
 }
 
-.floating-nav-item a:hover::before {
+.floating-nav-item:hover::before {
     transform: scaleY(1);
 }
 
-.floating-nav-item a:hover .icon {
+.floating-nav-item:hover .icon {
     transform: scale(1.2);
     filter: brightness(1.4);
 }
@@ -2221,7 +2221,7 @@ h4 {
         min-width: 180px;
     }
 
-    .floating-nav-item a {
+    .floating-nav-item {
         padding: 0.75rem 1.2rem;
         font-size: 0.98rem;
         gap: 0.85rem;
@@ -2298,7 +2298,7 @@ h4 {
         min-width: 160px;
     }
 
-    .floating-nav-item a {
+    .floating-nav-item {
         padding: 0.65rem 0.9rem;
         font-size: 0.9rem;
         gap: 0.7rem;

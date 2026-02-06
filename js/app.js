@@ -8,6 +8,8 @@ createApp({
             autoRotateInterval: null,
             formSuccess: false,
             marqueeAnimations: {},
+            showNavMenu: false,
+            chatMinimized: false,
             formData: {
                 name: '',
                 email: '',
@@ -198,6 +200,28 @@ createApp({
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
             }
+        },
+        
+        // Toggle navigation menu
+        toggleNavMenu() {
+            this.showNavMenu = !this.showNavMenu;
+        },
+        
+        // Scroll to section and close navigation menu
+        scrollToAndCloseNav(sectionId) {
+            event.preventDefault();
+            this.showNavMenu = false;
+            setTimeout(() => {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        },
+        
+        // Toggle chat widget minimize state
+        toggleChatMinimize() {
+            this.chatMinimized = !this.chatMinimized;
         },
         
         // Map software development services to their icons

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>DEAN BY D'ZYNE - Web & Software Development</title>
 
     <!-- Favicon -->
@@ -13,8 +13,94 @@
 </head>
 <body>
     <div id="app">
-        <!-- HEADER -->
-        <header class="header">
+        <!-- FLOATING NAVIGATION BUTTON -->
+        <button class="floating-nav-btn" @click="toggleNavMenu" title="Navigation Menu">
+            <span class="nav-icon">☰</span>
+        </button>
+
+        <!-- FLOATING NAVIGATION MENU -->
+        <div class="floating-nav-menu" :class="{ active: showNavMenu }">
+            <button class="nav-menu-close" @click="toggleNavMenu">✕</button>
+            <nav class="floating-nav-items">
+                <a href="#services" @click="scrollToAndCloseNav('services')" class="floating-nav-item">
+                    <span class="icon">📱</span>
+                    <span>Services</span>
+                </a>
+                <a href="https://github.com/WildXhild" target="_blank" class="floating-nav-item">
+                    <span class="icon">💼</span>
+                    <span>Portfolio</span>
+                </a>
+                <a href="#partners" @click="scrollToAndCloseNav('partners')" class="floating-nav-item">
+                    <span class="icon">🤝</span>
+                    <span>Our Partners</span>
+                </a>
+                <a href="#about" @click="scrollToAndCloseNav('about')" class="floating-nav-item">
+                    <span class="icon">ℹ️</span>
+                    <span>About</span>
+                </a>
+                <a href="#contact" @click="scrollToAndCloseNav('contact')" class="floating-nav-item">
+                    <span class="icon">📧</span>
+                    <span>Contact</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- FLOATING CHAT WIDGET -->
+        <div class="floating-chat-widget" :class="{ minimized: chatMinimized }">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span class="chat-icon">💬</span>
+                    <span>Get In Touch</span>
+                </div>
+                <button class="chat-minimize" @click="toggleChatMinimize">
+                    {{ chatMinimized ? '▲' : '−' }}
+                </button>
+            </div>
+            <div class="chat-content" v-if="!chatMinimized">
+                <form @submit.prevent="submitForm" class="chat-form">
+                    <div class="form-group">
+                        <input 
+                            v-model="formData.name" 
+                            type="text" 
+                            placeholder="Your Name" 
+                            class="form-input"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            v-model="formData.email" 
+                            type="email" 
+                            placeholder="Your Email" 
+                            class="form-input"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            v-model="formData.subject" 
+                            type="text" 
+                            placeholder="Subject" 
+                            class="form-input"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <textarea 
+                            v-model="formData.message" 
+                            placeholder="Your Message" 
+                            class="form-textarea"
+                            rows="3"
+                            required
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Send Message</button>
+                    <p v-if="formSuccess" class="form-success">✓ Message sent successfully!</p>
+                </form>
+            </div>
+        </div>
+
+        <!-- HEADER (modified) -->
             <!-- Navigation -->
             <nav class="navbar">
                 <div class="navbar-container">
@@ -23,7 +109,7 @@
                             <span class="logo-text">DEAN BY D'ZYNE</span>
                         </a>
                     </div>
-                    <ul class="nav-links">
+                    <ul class="nav-links" style="display: none;">
                         <li><a href="#services" @click="scrollTo('services')">Services</a></li>
                         <li><a href="https://github.com/WildXhild" target="_blank">Portfolio</a></li>
                         <li><a href="#partners" @click="scrollTo('partners')">Our Partners</a></li>
@@ -218,50 +304,6 @@
                                     <p>Within 24 hours</p>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="contact-form">
-                            <h3>Send us a Message</h3>
-                            <form @submit.prevent="submitForm">
-                                <div class="form-group">
-                                    <input 
-                                        v-model="formData.name" 
-                                        type="text" 
-                                        placeholder="Your Name" 
-                                        class="form-input"
-                                        required
-                                    >
-                                </div>
-                                <div class="form-group">
-                                    <input 
-                                        v-model="formData.email" 
-                                        type="email" 
-                                        placeholder="Your Email" 
-                                        class="form-input"
-                                        required
-                                    >
-                                </div>
-                                <div class="form-group">
-                                    <input 
-                                        v-model="formData.subject" 
-                                        type="text" 
-                                        placeholder="Subject" 
-                                        class="form-input"
-                                        required
-                                    >
-                                </div>
-                                <div class="form-group">
-                                    <textarea 
-                                        v-model="formData.message" 
-                                        placeholder="Your Message" 
-                                        class="form-textarea"
-                                        rows="5"
-                                        required
-                                    ></textarea>
-                                </div>
-                                <button type="submit" class="btn-submit">Send Message</button>
-                                <p v-if="formSuccess" class="form-success">✓ Message sent successfully!</p>
-                            </form>
                         </div>
                     </div>
 

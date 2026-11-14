@@ -51,61 +51,6 @@
             </nav>
         </div>
 
-        <!-- FLOATING CHAT WIDGET -->
-        <div class="floating-chat-widget" :class="{ minimized: chatMinimized }">
-            <div class="chat-header">
-                <div class="chat-title">
-                    <span class="chat-icon">💬</span>
-                    <span>Get In Touch</span>
-                </div>
-                <button class="chat-minimize" @click="toggleChatMinimize">
-                    {{ chatMinimized ? '▲' : '−' }}
-                </button>
-            </div>
-            <div class="chat-content" v-if="!chatMinimized">
-                <form @submit.prevent="submitForm" class="chat-form">
-                    <div class="form-group">
-                        <input 
-                            v-model="formData.name" 
-                            type="text" 
-                            placeholder="Your Name" 
-                            class="form-input"
-                            required
-                        >
-                    </div>
-                    <div class="form-group">
-                        <input 
-                            v-model="formData.email" 
-                            type="email" 
-                            placeholder="Your Email" 
-                            class="form-input"
-                            required
-                        >
-                    </div>
-                    <div class="form-group">
-                        <input 
-                            v-model="formData.subject" 
-                            type="text" 
-                            placeholder="Subject" 
-                            class="form-input"
-                            required
-                        >
-                    </div>
-                    <div class="form-group">
-                        <textarea 
-                            v-model="formData.message" 
-                            placeholder="Your Message" 
-                            class="form-textarea"
-                            rows="3"
-                            required
-                        ></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit">Send Message</button>
-                    <p v-if="formSuccess" class="form-success">✓ Message sent successfully!</p>
-                </form>
-            </div>
-        </div>
-
         <!-- HEADER (modified) -->
             <!-- Navigation -->
             <main id="main-content">

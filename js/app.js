@@ -195,7 +195,6 @@ createApp({
         },
         
         scrollTo(sectionId) {
-            event.preventDefault();
             const element = document.getElementById(sectionId);
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
@@ -228,14 +227,9 @@ createApp({
         
         // Scroll to section and close navigation menu
         scrollToAndCloseNav(sectionId) {
-            event.preventDefault();
-            this.showNavMenu = false;
-            setTimeout(() => {
-                const element = document.getElementById(sectionId);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 100);
+            this.closeNavMenu();
+            const element = document.getElementById(sectionId);
+            if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         },
         
         // Toggle chat widget minimize state
@@ -461,16 +455,6 @@ document.head.appendChild(style);
 // ================================================
 // PARALLAX EFFECT
 // ================================================
-function addParallaxEffect() {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-
-    window.addEventListener('scroll', () => {
-        const scrollPosition = window.pageYOffset;
-        hero.style.backgroundPosition = `center ${scrollPosition * 0.5}px`;
-    });
-}
-
 // ================================================
 // SMOOTH SCROLL BEHAVIOR FOR LINKS
 // ================================================

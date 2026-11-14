@@ -181,7 +181,7 @@
                     <p class="service-description">We Focus on Creating Software & Web Apps that Prioritize User Experience, are Visually Appealing, Adaptable to Various Devices, and Incorporate the Latest Design and Technology Trends.</p>
                     <div class="service-grid">
                         <div v-for="(item, index) in softwareDevelopment" :key="item" class="service-item software-dev-item">
-                            <div class="service-icon"><img :src="getSoftwareDevIcon(item)" :alt="item + ' icon'" class="icon-image"></div>
+                            <div class="service-icon"><img :src="getSoftwareDevIcon(item)" :alt="item + ' icon'" class="icon-image" width="120" height="120" loading="lazy" decoding="async"></div>
                             <p>{{ item }}</p>
                         </div>
                     </div>

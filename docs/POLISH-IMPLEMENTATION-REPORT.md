@@ -20,6 +20,7 @@ Date: 2026-11-14
 - Added the requested navy, royal-blue, logo-blue and off-white CSS tokens, Inter / Barlow Condensed font stacks, motion durations and easing.
 - Added light/dark token overrides using `[data-theme="dark"]`.
 - Added observer-driven section reveals, a sticky navbar state, and a CSS scroll-progress line where scroll-driven animation is supported.
+- Replaced the duplicated, auto-scrolling partner marquee/list with a single-card slideshow featuring previous/next controls, direct slide indicators, touch-swipe navigation, keyboard-operable buttons and reduced-motion-aware transitions.
 - Removed the mobile parallax and its per-scroll background-position paint work.
 - Removed the unused Anime.js CDN dependency and the unused carousel timer from the current page.
 - Added touch press states and reduced-motion fallbacks.
@@ -39,7 +40,7 @@ Date: 2026-11-14
 2. **Backend access control:** the submissions list/read/delete endpoints have no authentication in the existing backend. Do not expose the admin dashboard or these endpoints publicly until access control is implemented.
 3. **Email HTML escaping:** the backend email templates interpolate user-submitted fields into HTML. This needs a separate security patch and test.
 4. **Partner URLs:** the OYO VIBES CARTEL and MEMOIRS OF WILDXHILD partner entries still use `https://example.com`. Real URLs must be supplied; none were guessed.
-5. **Carousel:** app.js contained carousel data and a timer, but index.html did not render a service carousel. The dead timer was removed rather than adding a duplicate service interface. A swipe carousel requires a content/design decision.
+5. **Service carousel:** app.js contains unused service-carousel data, but index.html does not render a service carousel. The dead timer remains removed rather than adding a duplicate service interface. The Partners section now has its own manually controlled, swipeable slideshow.
 6. **Image conversion:** the large 2.08 MB hero background and partner/service media have not been converted to WebP. Partner images now use real img elements with dimensions, alt text and lazy loading; service media also has dimensions and lazy loading. Existing image assets remain as fallbacks.
 7. **Social share image:** Open Graph/Twitter currently use the existing logo PNG. A dedicated 1200×630 branded share card has not been created.
 8. **Favicon set:** a new SVG favicon was added and the existing PNG retained. Separate 16px/32px/180px raster variants were not generated.

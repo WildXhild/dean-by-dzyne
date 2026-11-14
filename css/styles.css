@@ -2506,3 +2506,5 @@ body.nav-open { overflow:hidden; }
 .service-icon svg { width:32px; height:32px; color:var(--royal-blue); }
 @media (max-width:768px) { .floating-chat-widget { display:none!important; } }
 @media (prefers-reduced-motion:reduce) { .partners-marquee,.marquee-content { animation:none!important; } }
+
+.partner-image-new { display:block; object-fit:cover; background:var(--off-white); }

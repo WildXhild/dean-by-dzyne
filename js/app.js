@@ -5,7 +5,6 @@ createApp({
         return {
             currentServiceIndex: 0,
             currentPartnerIndex: 0,
-            autoRotateInterval: null,
             formSuccess: false,
             marqueeAnimations: {},
             showNavMenu: false,
@@ -257,19 +256,6 @@ createApp({
             };
         },
         
-        // Auto-rotate carousel
-        startAutoRotate() {
-            this.autoRotateInterval = setInterval(() => {
-                this.nextService();
-            }, 6000); // Change slide every 6 seconds
-        },
-        
-        stopAutoRotate() {
-            if (this.autoRotateInterval) {
-                clearInterval(this.autoRotateInterval);
-            }
-        },
-        
         submitForm() {
             // Validate form
             if (!this.formData.name || !this.formData.email || !this.formData.subject || !this.formData.message) {
@@ -359,9 +345,6 @@ createApp({
             'Fun & Playful'
         ];
         
-        // Start auto-rotation when component mounts
-        this.startAutoRotate();
-        
         // Add scroll-triggered animations
         observeElements();
         
@@ -374,17 +357,9 @@ createApp({
     },
     
     beforeUnmount() {
-        this.stopAutoRotate();
         document.removeEventListener('keydown', this.handleNavKeydown);
     },
     
-    watch: {
-        currentServiceIndex() {
-            // Restart auto-rotate timer when manually changing slides
-            this.stopAutoRotate();
-            this.startAutoRotate();
-        }
-    }
 }).mount('#app');
 
 // ================================================

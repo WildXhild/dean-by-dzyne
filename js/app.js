@@ -424,8 +424,8 @@ style.textContent = `
     .quality,
     .service-category {
         opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
+        transform: translateY(24px);
+        transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     
     .service-item.animate-in,
@@ -478,7 +478,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const activeSectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        document.querySelectorAll('.nav-links a').forEach((link) => {
+        document.querySelectorAll('.nav-links a, .floating-nav-item').forEach((link) => {
             const active = link.getAttribute('href') === '#' + entry.target.id;
             link.classList.toggle('active', active);
             if (active) link.setAttribute('aria-current', 'location');

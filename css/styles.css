@@ -2535,3 +2535,8 @@ body { min-height:100dvh; background-attachment:scroll; }
   .navbar::after { animation:scroll-progress linear both; animation-timeline:scroll(root); }
   @keyframes scroll-progress { to { transform:scaleX(1); } }
 }
+
+.navbar { background:rgba(10,26,63,.24); backdrop-filter:none; -webkit-backdrop-filter:none; }
+.navbar .logo-text { color:var(--navy); }
+.navbar.scrolled { background:rgba(10,26,63,.94); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+.navbar.scrolled .logo-text { color:#fff; }

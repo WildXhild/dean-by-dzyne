@@ -512,3 +512,12 @@ if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', syncKeyboardState, { passive: true });
     window.visualViewport.addEventListener('scroll', syncKeyboardState, { passive: true });
 }
+
+const heroForNavbar = document.querySelector('.hero');
+const stickyNavbar = document.querySelector('.navbar');
+if (heroForNavbar && stickyNavbar && 'IntersectionObserver' in window) {
+    const navbarObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => stickyNavbar.classList.toggle('scrolled', !entry.isIntersecting));
+    }, { threshold: 0 });
+    navbarObserver.observe(heroForNavbar);
+}

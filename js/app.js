@@ -475,26 +475,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ================================================
 // ACTIVE NAV LINK ON SCROLL
 // ================================================
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
+const activeSectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        document.querySelectorAll('.nav-links a').forEach((link) => {
+            const active = link.getAttribute('href') === '#' + entry.target.id;
+            link.classList.toggle('active', active);
+            if (active) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+        });
     });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
+}, { rootMargin: '-20% 0px -65% 0px', threshold: 0 });
+document.querySelectorAll('section[id], footer[id]').forEach((section) => activeSectionObserver.observe(section));
 
 // Add active nav link styling
 const navStyle = document.createElement('style');

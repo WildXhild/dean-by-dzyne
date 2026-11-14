@@ -120,28 +120,41 @@
                     <p class="partners-intro">Our partnerships are rooted in a shared commitment to delivering quality and result-driven eco-system friendly solutions.</p>
                 </div>
                 
-                <div class="partners-marquee-wrapper">
-                    <div class="partners-marquee">
-                        <div v-for="(partner, index) in partners" :key="'original-' + index" class="partner-item">
-                            <div class="partner-card-new" :style="{ backgroundColor: partner.bgColor }">
-                                <img class="partner-image-new" :src="partner.image" :alt="partner.name" width="180" height="200" loading="lazy" decoding="async">
+                <div class="partners-slideshow" role="region" aria-roledescription="carousel" aria-label="Our partners">
+                    <div class="partners-slide-stage"
+                         @touchstart.passive="startPartnerSwipe"
+                         @touchend.passive="endPartnerSwipe">
+                        <transition name="partner-slide" mode="out-in">
+                            <article v-if="partners.length" :key="currentPartnerIndex" class="partner-card-new"
+                                     :style="{ backgroundColor: partners[currentPartnerIndex].bgColor }"
+                                     :aria-label="'Partner ' + (currentPartnerIndex + 1) + ' of ' + partners.length">
+                                <img class="partner-image-new" :src="partners[currentPartnerIndex].image"
+                                     :alt="partners[currentPartnerIndex].name" width="180" height="200"
+                                     :loading="currentPartnerIndex === 0 ? 'eager' : 'lazy'" decoding="async">
                                 <div class="partner-info">
-                                    <h4>{{ partner.name }}</h4>
-                                    <p>{{ partner.description }}</p>
-                                    <a v-if="partner.website" :href="partner.website" target="_blank" rel="noopener noreferrer" class="partner-website-link">Visit Website →</a>
+                                    <span class="partner-count">PARTNER {{ currentPartnerIndex + 1 }} / {{ partners.length }}</span>
+                                    <h3>{{ partners[currentPartnerIndex].name }}</h3>
+                                    <p>{{ partners[currentPartnerIndex].description }}</p>
+                                    <a v-if="partners[currentPartnerIndex].website"
+                                       :href="partners[currentPartnerIndex].website" target="_blank"
+                                       rel="noopener noreferrer" class="partner-website-link">Visit Website <span aria-hidden="true">→</span></a>
                                 </div>
-                            </div>
+                            </article>
+                        </transition>
+                    </div>
+                    <div class="partners-slide-controls">
+                        <button type="button" class="partner-arrow" @click="previousPartner"
+                                :disabled="partners.length < 2" aria-label="Previous partner">‹</button>
+                        <div class="partner-pagination" role="group" aria-label="Choose a partner">
+                            <button v-for="(partner, index) in partners" :key="partner.name"
+                                    type="button" class="partner-dot"
+                                    :class="{ active: currentPartnerIndex === index }"
+                                    @click="selectPartner(index)"
+                                    :aria-label="'Show ' + partner.name"
+                                    :aria-current="currentPartnerIndex === index ? 'true' : null"></button>
                         </div>
-                        <div v-for="(partner, index) in partners" :key="'duplicate-' + index" class="partner-item">
-                            <div class="partner-card-new" :style="{ backgroundColor: partner.bgColor }">
-                                <img class="partner-image-new" :src="partner.image" :alt="partner.name" width="180" height="200" loading="lazy" decoding="async">
-                                <div class="partner-info">
-                                    <h4>{{ partner.name }}</h4>
-                                    <p>{{ partner.description }}</p>
-                                    <a v-if="partner.website" :href="partner.website" target="_blank" rel="noopener noreferrer" class="partner-website-link">Visit Website →</a>
-                                </div>
-                            </div>
-                        </div>
+                        <button type="button" class="partner-arrow" @click="nextPartner"
+                                :disabled="partners.length < 2" aria-label="Next partner">›</button>
                     </div>
                 </div>
             </div>

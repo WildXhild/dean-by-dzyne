@@ -1,212 +1,101 @@
-# Dean by D'Zyne - Professional Portfolio Website
+# Dean by D'Zyne
 
-A modern, responsive portfolio website built with HTML5, CSS3, and Vue.js 3. Showcasing web development, app development, and digital integration services.
+**Digital Solutions. Real Results.**
 
-## 🎯 Features
+Dean by D'Zyne is a Nigerian digital-solutions studio offering digital integration, website development, software, SEO, AI automation and branding. The studio is remote-first, serving clients across Nigeria, with a focus on Lagos and Oyo.
 
-- **Responsive Design** - Works perfectly on desktop, tablet, and mobile devices
-- **Animated Service Carousel** - Auto-rotating showcase of services with manual controls
-- **Interactive Components** - Built with Vue.js 3 for dynamic, reactive elements
-- **Modern Aesthetics** - Elegant design with sophisticated color palette
-- **Smooth Animations** - Scroll-triggered animations and transitions
-- **SEO Optimized** - Semantic HTML and meta tags
-- **Fast Loading** - Minimal dependencies, optimized performance
+## Technology
 
-## 📁 Project Structure
+- Semantic HTML5
+- CSS3 with custom properties, responsive layouts and motion preferences
+- Vue 3 via CDN for reactive interface behavior
+- Vanilla JavaScript for interactions and browser APIs
+- Node.js and Express backend for contact submissions
+- Netlify for static-site hosting and Git-based deployment
 
+No frontend build step or framework migration is required.
+
+## Repository structure
+
+```text
+.
+├── index.html                 # Main website
+├── css/styles.css             # Brand system, layout and animations
+├── js/app.js                  # Vue app and browser interactions
+├── Images/                    # Logo, partner artwork and service media
+├── backend/                   # Express API and admin dashboard
+│   ├── server.js
+│   ├── routes/
+│   ├── middleware/
+│   ├── utils/
+│   └── package.json
+├── docs/                      # Project and implementation documentation
+├── favicon.png
+├── sitemap.xml
+├── robots.txt
+├── netlify.toml
+└── _headers
 ```
-DEAN BY D'ZYNE/
-├── index.html          # Main HTML file
-├── css/
-│   └── styles.css      # All styling and animations
-├── js/
-│   └── app.js          # Vue.js application and interactions
-├── assets/             # (Create this folder for images/logos)
-└── README.md           # This file
-```
 
-## 🚀 Getting Started
+## Run the website locally
 
-### Prerequisites
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- A text editor (VS Code recommended)
-- Optional: A local server (Python, Node.js, or VS Code Live Server extension)
+From the repository root, serve the static files with any local HTTP server.
 
-### Installation
+Python:
 
-1. **Clone or Download** the project folder
-2. **Navigate** to the project directory
-3. **Open** `index.html` in your browser
-
-### Using a Local Server (Recommended)
-
-**Option 1: VS Code Live Server**
-1. Install the "Live Server" extension in VS Code
-2. Right-click on `index.html` and select "Open with Live Server"
-
-**Option 2: Python**
 ```bash
-cd "C:\Users\SHARBET\Desktop\DEAN BY D'ZYNE"
 python -m http.server 8000
-# Visit http://localhost:8000 in your browser
 ```
 
-**Option 3: Node.js**
+Then open http://localhost:8000.
+
+Alternatively, use the VS Code Live Server extension. Opening index.html directly with file:// is less reliable for browser APIs and relative resources.
+
+## Run the contact API locally
+
+The backend is separate from the Netlify static site.
+
 ```bash
-npm install -g http-server
-cd "C:\Users\SHARBET\Desktop\DEAN BY D'ZYNE"
-http-server
+cd backend
+npm install
+cp .env.example .env
 ```
 
-## 🎨 Customization Guide
+Edit backend/.env with the email provider credentials and allowed frontend origin, then run:
 
-### Update Contact Information
-Edit the footer section in `index.html`:
-```html
-<a href="mailto:your@email.com">your@email.com</a>
-<a href="tel:+1234567890">+1 (234) 567-890</a>
+```bash
+npm start
 ```
 
-### Add Your Logo
-Replace the logo placeholder in the hero section:
-```html
-<div class="logo-placeholder">D</div>
-```
+The API listens on port 5000 by default. The browser frontend accepts an optional `window.DEAN_API_BASE_URL` value to configure the API base URL. Set this to the deployed API origin before using the live contact form; localhost is only a local-development fallback.
 
-Or add an image:
-```html
-<img src="assets/your-logo.png" alt="Logo" class="logo-image">
-```
+**Deployment note:** Netlify deploys the static frontend. It does not host this Express server automatically. Deploy the backend to a Node-capable host and configure CORS and environment variables there.
 
-### Update Partner Information
-Modify the partners array in `js/app.js`:
-```javascript
-partners: [
-    {
-        name: 'Your Partner Name',
-        initials: 'YP',
-        description: 'Partner description',
-        website: 'https://partner-website.com',
-        linkedin: 'https://linkedin.com/company/partner'
-    },
-    // Add more partners...
-]
-```
+## Deploy to Netlify
 
-### Update Services
-Modify the services array in `js/app.js`:
-```javascript
-services: [
-    {
-        name: 'Your Service',
-        description: 'Service description'
-    },
-    // Add more services...
-]
-```
+1. Connect this GitHub repository to Netlify.
+2. Select the `main` branch after the reviewed changes have been merged.
+3. Leave the build command empty.
+4. Set the publish directory to the repository root (`.`).
+5. Deploy. Netlify serves index.html and applies netlify.toml and _headers.
+6. Configure the production API base URL and backend CORS origin separately.
 
-### Change Color Palette
-Update the CSS variables in `css/styles.css`:
-```css
-:root {
-    --color-darkest: #1a1a2e;      /* Main dark color */
-    --color-primary: #0f3460;       /* Primary blue */
-    --color-secondary: #e94560;     /* Accent red/pink */
-    --color-accent: #ffd700;        /* Gold highlight */
-    --color-light: #eaeaea;         /* Light gray */
-    --color-white: #ffffff;
-}
-```
+Pull-request branches can be deployed as Netlify Deploy Previews for review before merging.
 
-## 📱 Responsive Breakpoints
+## Configuration and security
 
-- **Desktop**: Full layout (1200px+)
-- **Tablet**: 769px - 1199px
-- **Mobile**: 480px - 768px
-- **Small Mobile**: Below 480px
+- Keep real credentials in local environment files or the backend hosting provider's secret settings.
+- Never commit .env files, API keys, mail passwords or private submission data.
+- Root and backend ignore rules cover environment files and local development artifacts.
+- The backend's submission-management endpoints currently require an authentication/security review before public production use. Do not expose the admin dashboard or submission endpoints to the public internet without access control.
 
-## 🔧 Technologies Used
+## Documentation
 
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with custom properties
-- **Vue.js 3** - Reactive JavaScript framework (via CDN)
-- **Anime.js** - Advanced animation library (optional)
+Historical implementation notes, setup guides, backend instructions and QA references are kept under [docs/](docs/). The current pre-change audit is [docs/PRE-IMPLEMENTATION-AUDIT.md](docs/PRE-IMPLEMENTATION-AUDIT.md).
 
-## ✨ Key Features Explained
+## Contact
 
-### Service Carousel
-- Auto-rotates every 6 seconds
-- Manual navigation with previous/next buttons
-- Smooth transitions with multiple animation effects
-- Responsive to clicks and keyboard navigation
-
-### Scroll Animations
-- Elements fade in and slide up as they enter viewport
-- Staggered animation for multiple elements
-- Smooth scroll behavior on link clicks
-
-### Interactive Partner Cards
-- Hover effects with smooth transitions
-- Click to select and highlight partners
-- Social media and website links
-
-### Parallax Hero Section
-- Background moves slower than scroll
-- Creates depth and visual interest
-- Works smoothly on all devices
-
-## 📊 Performance Optimizations
-
-- Minimal external dependencies
-- CSS3 animations (hardware-accelerated)
-- Lazy loading of images
-- Semantic HTML for better SEO
-- Mobile-first design approach
-
-## 🌐 Deployment
-
-### Deploy to GitHub Pages
-1. Create a GitHub repository
-2. Push the project files
-3. Enable GitHub Pages in repository settings
-4. Your site will be live at `https://yourusername.github.io/repo-name`
-
-### Deploy to Netlify
-1. Connect your GitHub repository
-2. Set build command to: (leave empty)
-3. Set publish directory to: (root folder)
-4. Deploy!
-
-### Deploy to Other Hosting
-Simply upload all files to your hosting provider via FTP or control panel.
-
-## 📞 Contact Information
-
-To add your contact details, update the footer section in `index.html` with your actual:
-- Email address
-- Phone number
-- Business address
-- Social media links
-
-## 🔐 Best Practices
-
-- Keep your contact information up to date
-- Regularly update your portfolio with new projects
-- Test on multiple devices and browsers
-- Monitor analytics for visitor insights
-- Maintain security of any backend services
-
-## 📝 License
-
-This template is free to use and modify for your portfolio.
-
-## 🤝 Support
-
-For questions or customization assistance, refer to the inline comments in:
-- `index.html` - Structure and content
-- `css/styles.css` - Styling and layout
-- `js/app.js` - Interactions and animations
-
----
-
-**Built with passion for web developers who want to showcase their work beautifully.**
+- Email: deanbydzyne@gmail.com
+- WhatsApp / phone: +234 814 382 4044
+- Service area: Remote-first, serving clients across Nigeria • Lagos & Oyo
+- Website: https://deanbydzyne.netlify.app

@@ -5,7 +5,6 @@ createApp({
         return {
             currentServiceIndex: 0,
             currentPartnerIndex: 0,
-            autoRotateInterval: null,
             formSuccess: false,
             marqueeAnimations: {},
             showNavMenu: false,
@@ -195,7 +194,6 @@ createApp({
         },
         
         scrollTo(sectionId) {
-            event.preventDefault();
             const element = document.getElementById(sectionId);
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
@@ -205,18 +203,32 @@ createApp({
         // Toggle navigation menu
         toggleNavMenu() {
             this.showNavMenu = !this.showNavMenu;
+            document.body.classList.toggle('nav-open', this.showNavMenu);
+            if (this.showNavMenu) this.$nextTick(() => document.querySelector('.nav-menu-close').focus());
+            else document.querySelector('.floating-nav-btn').focus();
+        },
+        closeNavMenu() {
+            this.showNavMenu = false;
+            document.body.classList.remove('nav-open');
+            document.querySelector('.floating-nav-btn').focus();
+        },
+        handleNavKeydown(event) {
+            if (!this.showNavMenu) return;
+            if (event.key === 'Escape') { this.closeNavMenu(); return; }
+            if (event.key !== 'Tab') return;
+            const menu = document.getElementById('site-navigation');
+            const items = menu.querySelectorAll('a[href], button:not([disabled])');
+            if (!items.length) return;
+            const first = items[0], last = items[items.length - 1];
+            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
         },
         
         // Scroll to section and close navigation menu
         scrollToAndCloseNav(sectionId) {
-            event.preventDefault();
-            this.showNavMenu = false;
-            setTimeout(() => {
-                const element = document.getElementById(sectionId);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 100);
+            this.closeNavMenu();
+            const element = document.getElementById(sectionId);
+            if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         },
         
         // Toggle chat widget minimize state
@@ -244,19 +256,6 @@ createApp({
             };
         },
         
-        // Auto-rotate carousel
-        startAutoRotate() {
-            this.autoRotateInterval = setInterval(() => {
-                this.nextService();
-            }, 6000); // Change slide every 6 seconds
-        },
-        
-        stopAutoRotate() {
-            if (this.autoRotateInterval) {
-                clearInterval(this.autoRotateInterval);
-            }
-        },
-        
         submitForm() {
             // Validate form
             if (!this.formData.name || !this.formData.email || !this.formData.subject || !this.formData.message) {
@@ -271,7 +270,7 @@ createApp({
             submitButton.textContent = 'Sending...';
             
             // Submit to backend
-            const apiUrl = process.env.VUE_APP_API_URL || 'http://localhost:5000/api';
+            const apiUrl = window.DEAN_API_BASE_URL || 'http://localhost:5000/api';
             
             fetch(`${apiUrl}/contact`, {
                 method: 'POST',
@@ -346,30 +345,21 @@ createApp({
             'Fun & Playful'
         ];
         
-        // Start auto-rotation when component mounts
-        this.startAutoRotate();
-        
         // Add scroll-triggered animations
-        this.addScrollAnimations();
+        observeElements();
         
         // Add parallax effect to hero section
-        this.addParallaxEffect();
+        // Mobile parallax disabled; reveals are observer-driven.
         
         // Initialize sticky footer reveal animation
         this.initStickyFooter();
+        document.addEventListener('keydown', this.handleNavKeydown);
     },
     
     beforeUnmount() {
-        this.stopAutoRotate();
+        document.removeEventListener('keydown', this.handleNavKeydown);
     },
     
-    watch: {
-        currentServiceIndex() {
-            // Restart auto-rotate timer when manually changing slides
-            this.stopAutoRotate();
-            this.startAutoRotate();
-        }
-    }
 }).mount('#app');
 
 // ================================================
@@ -392,7 +382,7 @@ function observeElements() {
 
     // Observe all service items, partner cards, etc.
     document.querySelectorAll(
-        '.service-item, .partner-card, .quality, .service-category'
+        '.service-item, .partner-card-new, .quality, .service-category'
     ).forEach(el => {
         observer.observe(el);
     });
@@ -409,12 +399,12 @@ style.textContent = `
     .quality,
     .service-category {
         opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
+        transform: translateY(24px);
+        transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     
     .service-item.animate-in,
-    .partner-card.animate-in,
+    .partner-card-new.animate-in,
     .quality.animate-in,
     .service-category.animate-in {
         opacity: 1;
@@ -427,10 +417,10 @@ style.textContent = `
     .service-item:nth-child(4) { transition-delay: 0.3s; }
     .service-item:nth-child(5) { transition-delay: 0.4s; }
     
-    .partner-card:nth-child(2) { transition-delay: 0.1s; }
-    .partner-card:nth-child(3) { transition-delay: 0.2s; }
-    .partner-card:nth-child(4) { transition-delay: 0.3s; }
-    .partner-card:nth-child(5) { transition-delay: 0.4s; }
+    .partner-card-new:nth-child(2) { transition-delay: 0.1s; }
+    .partner-card-new:nth-child(3) { transition-delay: 0.2s; }
+    .partner-card-new:nth-child(4) { transition-delay: 0.3s; }
+    .partner-card-new:nth-child(5) { transition-delay: 0.4s; }
     
     .quality:nth-child(2) { transition-delay: 0.1s; }
     .quality:nth-child(3) { transition-delay: 0.2s; }
@@ -441,16 +431,6 @@ document.head.appendChild(style);
 // ================================================
 // PARALLAX EFFECT
 // ================================================
-function addParallaxEffect() {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-
-    window.addEventListener('scroll', () => {
-        const scrollPosition = window.pageYOffset;
-        hero.style.backgroundPosition = `center ${scrollPosition * 0.5}px`;
-    });
-}
-
 // ================================================
 // SMOOTH SCROLL BEHAVIOR FOR LINKS
 // ================================================
@@ -470,26 +450,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ================================================
 // ACTIVE NAV LINK ON SCROLL
 // ================================================
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
+const activeSectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        document.querySelectorAll('.nav-links a, .floating-nav-item').forEach((link) => {
+            const active = link.getAttribute('href') === '#' + entry.target.id;
+            link.classList.toggle('active', active);
+            if (active) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+        });
     });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
+}, { rootMargin: '-20% 0px -65% 0px', threshold: 0 });
+document.querySelectorAll('section[id], footer[id]').forEach((section) => activeSectionObserver.observe(section));
 
 // Add active nav link styling
 const navStyle = document.createElement('style');
@@ -504,3 +476,23 @@ navStyle.textContent = `
     }
 `;
 document.head.appendChild(navStyle);
+
+
+// Keep the quick-contact bar clear of the on-screen mobile keyboard.
+if (window.visualViewport) {
+    const syncKeyboardState = () => {
+        const keyboardOpen = window.innerHeight - window.visualViewport.height > 140;
+        document.body.classList.toggle('keyboard-open', keyboardOpen);
+    };
+    window.visualViewport.addEventListener('resize', syncKeyboardState, { passive: true });
+    window.visualViewport.addEventListener('scroll', syncKeyboardState, { passive: true });
+}
+
+const heroForNavbar = document.querySelector('.hero');
+const stickyNavbar = document.querySelector('.navbar');
+if (heroForNavbar && stickyNavbar && 'IntersectionObserver' in window) {
+    const navbarObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => stickyNavbar.classList.toggle('scrolled', !entry.isIntersecting));
+    }, { threshold: 0 });
+    navbarObserver.observe(heroForNavbar);
+}

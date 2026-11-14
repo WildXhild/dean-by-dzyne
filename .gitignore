@@ -5,3 +5,10 @@ node_modules/
 dist/
 build/
 .vscode/settings.json
+
+# Local environment and submission data
+.env.*
+!.env.example
+backend/data/
+.DS_Store
+Thumbs.db

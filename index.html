@@ -2,106 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DEAN BY D'ZYNE - Web & Software Development</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Dean by D'Zyne | Digital Solutions. Real Results.</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/favicon.png">
 
     <link rel="stylesheet" href="css/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Dean by Dzyne","url":"https://deanbydzyne.netlify.app/","email":"deanbydzyne@gmail.com","telephone":"+2348143824044","areaServed":{"@type":"Country","name":"Nigeria"},"description":"Remote-first, serving clients across Nigeria • Lagos & Oyo. Digital integration, websites, software, SEO, AI automation and branding."}</script>
+<meta name="description" content="Dean by Dzyne is a Nigerian digital-solutions studio delivering websites, software, SEO, digital integration, branding and AI automation. Remote-first, serving clients across Nigeria • Lagos &amp; Oyo.">
+<meta name="theme-color" content="#0A1A3F"><link rel="canonical" href="https://deanbydzyne.netlify.app/">
+<meta property="og:type" content="website"><meta property="og:title" content="Dean by Dzyne | Digital Solutions. Real Results."><meta property="og:description" content="Digital integration, websites, software, SEO, branding and AI automation. Remote-first, serving clients across Nigeria • Lagos &amp; Oyo.">
+<meta property="og:url" content="https://deanbydzyne.netlify.app/"><meta property="og:image" content="https://deanbydzyne.netlify.app/Images/LOGO.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:description" content="Remote-first, serving clients across Nigeria • Lagos &amp; Oyo. Digital Solutions. Real Results.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="preload" as="image" href="Images/LOGO.png">
 </head>
 <body>
-    <div id="app">
+    <a class="skip-link" href="#main-content">Skip to content</a><div id="app">
         <!-- FLOATING NAVIGATION BUTTON -->
-        <button class="floating-nav-btn" @click="toggleNavMenu" title="Navigation Menu">
-            <span class="nav-icon">☰</span>
+        <button class="floating-nav-btn" @click="toggleNavMenu" :aria-expanded="showNavMenu.toString()" aria-controls="site-navigation" aria-label="Open navigation menu" title="Navigation Menu">
+            <span class="nav-icon" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
 
+        <button class="nav-backdrop" :class="{ active: showNavMenu }" @click="closeNavMenu" aria-label="Close navigation"></button>
         <!-- FLOATING NAVIGATION MENU -->
-        <div class="floating-nav-menu" :class="{ active: showNavMenu }">
-            <button class="nav-menu-close" @click="toggleNavMenu">✕</button>
+        <div id="site-navigation" class="floating-nav-menu" :class="{ active: showNavMenu }" :aria-hidden="(!showNavMenu).toString()" role="dialog" aria-modal="true" aria-label="Main navigation">
+            <button class="nav-menu-close" @click="closeNavMenu" aria-label="Close navigation menu">×</button>
             <nav class="floating-nav-items">
                 <a href="#services" @click="scrollToAndCloseNav('services')" class="floating-nav-item">
-                    <span class="icon">📱</span>
+                    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/></svg></span>
                     <span>Services</span>
                 </a>
-                <a href="https://github.com/WildXhild" target="_blank" class="floating-nav-item">
-                    <span class="icon">💼</span>
+                <a href="https://github.com/WildXhild" target="_blank" rel="noopener noreferrer" class="floating-nav-item">
+                    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3"/></svg></span>
                     <span>Portfolio</span>
                 </a>
                 <a href="#partners" @click="scrollToAndCloseNav('partners')" class="floating-nav-item">
-                    <span class="icon">🤝</span>
+                    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 12 3 3 5-5M3 8l4-4 4 4-4 4zM13 8l4-4 4 4-4 4z"/></svg></span>
                     <span>Our Partners</span>
                 </a>
                 <a href="#about" @click="scrollToAndCloseNav('about')" class="floating-nav-item">
-                    <span class="icon">ℹ️</span>
+                    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span>
                     <span>About</span>
                 </a>
                 <a href="#contact" @click="scrollToAndCloseNav('contact')" class="floating-nav-item">
-                    <span class="icon">📧</span>
+                    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
                     <span>Contact</span>
                 </a>
             </nav>
         </div>
 
-        <!-- FLOATING CHAT WIDGET -->
-        <div class="floating-chat-widget" :class="{ minimized: chatMinimized }">
-            <div class="chat-header">
-                <div class="chat-title">
-                    <span class="chat-icon">💬</span>
-                    <span>Get In Touch</span>
-                </div>
-                <button class="chat-minimize" @click="toggleChatMinimize">
-                    {{ chatMinimized ? '▲' : '−' }}
-                </button>
-            </div>
-            <div class="chat-content" v-if="!chatMinimized">
-                <form @submit.prevent="submitForm" class="chat-form">
-                    <div class="form-group">
-                        <input 
-                            v-model="formData.name" 
-                            type="text" 
-                            placeholder="Your Name" 
-                            class="form-input"
-                            required
-                        >
-                    </div>
-                    <div class="form-group">
-                        <input 
-                            v-model="formData.email" 
-                            type="email" 
-                            placeholder="Your Email" 
-                            class="form-input"
-                            required
-                        >
-                    </div>
-                    <div class="form-group">
-                        <input 
-                            v-model="formData.subject" 
-                            type="text" 
-                            placeholder="Subject" 
-                            class="form-input"
-                            required
-                        >
-                    </div>
-                    <div class="form-group">
-                        <textarea 
-                            v-model="formData.message" 
-                            placeholder="Your Message" 
-                            class="form-textarea"
-                            rows="3"
-                            required
-                        ></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit">Send Message</button>
-                    <p v-if="formSuccess" class="form-success">✓ Message sent successfully!</p>
-                </form>
-            </div>
-        </div>
-
         <!-- HEADER (modified) -->
             <!-- Navigation -->
+            <main id="main-content">
             <nav class="navbar">
                 <div class="navbar-container">
                     <div class="navbar-brand">
@@ -111,7 +64,7 @@
                     </div>
                     <ul class="nav-links" style="display: none;">
                         <li><a href="#services" @click="scrollTo('services')">Services</a></li>
-                        <li><a href="https://github.com/WildXhild" target="_blank">Portfolio</a></li>
+                        <li><a href="https://github.com/WildXhild" target="_blank" rel="noopener noreferrer">Portfolio</a></li>
                         <li><a href="#partners" @click="scrollTo('partners')">Our Partners</a></li>
                         <li><a href="#about" @click="scrollTo('about')">About</a></li>
                         <li><a href="#contact" @click="scrollTo('contact')">Contact</a></li>
@@ -157,7 +110,7 @@
                     </div>
                 </div>
             </section>
-        </header>
+        
 
         <!-- PARTNERS SECTION -->
         <section class="partners" id="partners">
@@ -171,21 +124,21 @@
                     <div class="partners-marquee">
                         <div v-for="(partner, index) in partners" :key="'original-' + index" class="partner-item">
                             <div class="partner-card-new" :style="{ backgroundColor: partner.bgColor }">
-                                <div class="partner-image-new" :style="{ backgroundImage: `url('${partner.image}')` }"></div>
+                                <img class="partner-image-new" :src="partner.image" :alt="partner.name" width="180" height="200" loading="lazy" decoding="async">
                                 <div class="partner-info">
                                     <h4>{{ partner.name }}</h4>
                                     <p>{{ partner.description }}</p>
-                                    <a v-if="partner.website" :href="partner.website" target="_blank" class="partner-website-link">Visit Website →</a>
+                                    <a v-if="partner.website" :href="partner.website" target="_blank" rel="noopener noreferrer" class="partner-website-link">Visit Website →</a>
                                 </div>
                             </div>
                         </div>
                         <div v-for="(partner, index) in partners" :key="'duplicate-' + index" class="partner-item">
                             <div class="partner-card-new" :style="{ backgroundColor: partner.bgColor }">
-                                <div class="partner-image-new" :style="{ backgroundImage: `url('${partner.image}')` }"></div>
+                                <img class="partner-image-new" :src="partner.image" :alt="partner.name" width="180" height="200" loading="lazy" decoding="async">
                                 <div class="partner-info">
                                     <h4>{{ partner.name }}</h4>
                                     <p>{{ partner.description }}</p>
-                                    <a v-if="partner.website" :href="partner.website" target="_blank" class="partner-website-link">Visit Website →</a>
+                                    <a v-if="partner.website" :href="partner.website" target="_blank" rel="noopener noreferrer" class="partner-website-link">Visit Website →</a>
                                 </div>
                             </div>
                         </div>
@@ -205,7 +158,7 @@
                     <p class="service-description">Maximize Your Online Presence across All Platforms</p>
                     <div class="service-grid">
                         <div v-for="item in digitalIntegration" :key="item" class="service-item">
-                            <div class="service-icon">📱</div>
+                            <div class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
                             <p>{{ item }}</p>
                         </div>
                     </div>
@@ -228,7 +181,7 @@
                     <p class="service-description">We Focus on Creating Software & Web Apps that Prioritize User Experience, are Visually Appealing, Adaptable to Various Devices, and Incorporate the Latest Design and Technology Trends.</p>
                     <div class="service-grid">
                         <div v-for="(item, index) in softwareDevelopment" :key="item" class="service-item software-dev-item">
-                            <div class="service-icon"><img :src="getSoftwareDevIcon(item)" :alt="item + ' icon'" class="icon-image"></div>
+                            <div class="service-icon"><img :src="getSoftwareDevIcon(item)" :alt="item + ' icon'" class="icon-image" width="120" height="120" loading="lazy" decoding="async"></div>
                             <p>{{ item }}</p>
                         </div>
                     </div>
@@ -241,25 +194,25 @@
             <div class="container">
                 <h2 class="section-title">About Us</h2>
                 <div class="about-content">
-                    <p>Front-End/Back-End Developer Building Practical, User-focused Software, Websites & Web-AppS. ExperienceD across Websites and Offline-First Business Applications.</p>
+                    <p>Front-End/Back-End Developer Building Practical, User-focused Software, Websites & Web Apps. Experienced across Websites and Offline-First Business Applications.</p>
                     <div class="qualities">
                         <div class="quality">
-                            <span class="quality-icon">✨</span>
+                            <span class="quality-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2 1.5 7.5L21 12l-7.5 1.5L12 21l-1.5-7.5L3 12l7.5-2.5L12 2Z"/></svg></span>
                             <h4>Elegant Aesthetics</h4>
                             <p>Sophisticated Design with Confident, Flexible Dynamic Elements</p>
                         </div>
                         <div class="quality">
-                            <span class="quality-icon">🎨</span>
+                            <span class="quality-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.5-3.3 1.7 1.7 0 0 1 1.3-2.8H18a3 3 0 0 0 3-3c0-5-4-9-9-9Z"/></svg></span>
                             <h4>Clean & Honest</h4>
                             <p>Transparent, Straightforward Solutions that Users Can Trust</p>
                         </div>
                         <div class="quality">
-                            <span class="quality-icon">🚀</span>
+                            <span class="quality-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 15c-1 0-2 1-2 3 2 0 3-1 3-2M9 14l-3 3M12 12l-2-2c2-5 6-7 11-7 0 5-2 9-7 11l-2-2Z"/></svg></span>
                             <h4>Resilient</h4>
                             <p>Reliable, scalable applications built to last</p>
                         </div>
                         <div class="quality">
-                            <span class="quality-icon">😊</span>
+                            <span class="quality-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></span>
                             <h4>Fun & Playful</h4>
                             <p>Delightful touches that make the experience enjoyable</p>
                         </div>
@@ -277,28 +230,28 @@
                         <div class="contact-info">
                             <h3>Contact Details</h3>
                             <div class="contact-item">
-                                <span class="contact-icon">📧</span>
+                                <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
                                 <div>
                                     <p class="label">Email</p>
                                     <a href="mailto:deanbydzyne@gmail.com">deanbydzyne@gmail.com</a>
                                 </div>
                             </div>
                             <div class="contact-item">
-                                <span class="contact-icon">📞</span>
+                                <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3h4l2 5-3 2a15 15 0 0 0 6 6l2-3 5 2v4c0 1-1 2-2 2C10 20 4 14 3 5c0-1 1-2 2-2Z"/></svg></span>
                                 <div>
                                     <p class="label">Phone</p>
                                     <a href="tel:+2348143824044">+234 (814) 382-4044</a>
                                 </div>
                             </div>
                             <div class="contact-item">
-                                <span class="contact-icon">📍</span>
+                                <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
                                 <div>
-                                    <p class="label">Business Address</p>
-                                    <p>Ikeja, Lagos, Nigeria</p>
+                                    <p class="label">Serving</p>
+                                    <p>Remote-first, serving clients across Nigeria • Lagos &amp; Oyo</p>
                                 </div>
                             </div>
                             <div class="contact-item">
-                                <span class="contact-icon">⏰</span>
+                                <span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg></span>
                                 <div>
                                     <p class="label">Response Time</p>
                                     <p>Within 24 hours</p>
@@ -307,32 +260,46 @@
                         </div>
                     </div>
 
+                    <div class="contact-form">
+                        <h3>Send a Message</h3>
+                        <form @submit.prevent="submitForm" class="contact-message-form">
+                            <div class="form-group"><label for="contact-name">Your Name</label><input id="contact-name" v-model="formData.name" type="text" class="form-input" autocomplete="name" required></div>
+                            <div class="form-group"><label for="contact-email">Your Email</label><input id="contact-email" v-model="formData.email" type="email" class="form-input" autocomplete="email" required></div>
+                            <div class="form-group"><label for="contact-subject">Subject</label><input id="contact-subject" v-model="formData.subject" type="text" class="form-input" required></div>
+                            <div class="form-group"><label for="contact-message">Your Message</label><textarea id="contact-message" v-model="formData.message" class="form-textarea" rows="4" required></textarea></div>
+                            <button type="submit" class="btn-submit">Send Message</button>
+                            <p v-if="formSuccess" class="form-success" role="status">✓ Message sent successfully!</p>
+                        </form>
+                    </div>
                     <div class="social-links">
                         <h3>Follow Us</h3>
                         <p class="social-intro">Connect with us on social media</p>
                         <div class="social-icons">
-                            <a href="https://www.linkedin.com/in/dean-ubi-15a622391/?trk=PROFILE_DROP_DOWN" target="_blank" class="social-icon" title="LinkedIn">in</a>
-                            <a href="https://www.threads.com/@dean_by_d_zyne" target="_blank" class="social-icon" title="Threads">📱</a>
-                            <a href="https://web.facebook.com/deanbydzyne/" target="_blank" class="social-icon" title="Facebook">f</a>
-                            <a href="https://www.instagram.com/dean_by_d_zyne" target="_blank" class="social-icon" title="Instagram">📷</a>
-                            <a href="https://x.com/Dean_by_Dzyne" target="_blank" class="social-icon" title="X">𝕏</a>
-                            <a href="https://wa.me/2347042313979" target="_blank" class="social-icon" title="WhatsApp">💬</a>
+                            <a href="https://www.linkedin.com/in/dean-ubi-15a622391/?trk=PROFILE_DROP_DOWN" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v10M5 5h.01M10 19v-6a3 3 0 0 1 6 0v6M10 10v9"/></svg></a>
+                            <a href="https://www.threads.com/@dean_by_d_zyne" target="_blank" rel="noopener noreferrer" class="social-icon" title="Threads" aria-label="Threads"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c-5 0-8-3.5-8-9s3-9 8-9 8 3.5 8 9c0 3-1.5 5-4 5-2 0-3-1.5-3-3s1-2.5 3-2.5 3 1 4 2.5"/><path d="M8 11c1-2 6-2 8 0"/></svg></a>
+                            <a href="https://web.facebook.com/deanbydzyne/" target="_blank" rel="noopener noreferrer" class="social-icon" title="Facebook" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 21v-9h3l.5-4H14V6c0-1 1-2 2-2h2V1h-3c-3 0-5 2-5 5v2H7v4h3v9"/></svg></a>
+                            <a href="https://www.instagram.com/dean_by_d_zyne" target="_blank" rel="noopener noreferrer" class="social-icon" title="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+                            <a href="https://x.com/Dean_by_Dzyne" target="_blank" rel="noopener noreferrer" class="social-icon" title="X" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 3 16 18M20 3 4 21M4 3h5l11 18h-5L4 3Z"/></svg></a>
+                            <a href="https://wa.me/2348143824044" target="_blank" rel="noopener noreferrer" class="social-icon" title="WhatsApp" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.1A8.5 8.5 0 1 1 20 11.5Z"/><path d="M8.5 8.5c.5 2 2 3.5 4 4l1-1 2 1"/></svg></a>
                         </div>
                     </div>
                 </div>
                 <div class="footer-bottom">
                     <p>&copy; 2026 Dean by D'Zyne. All rights reserved.</p>
-                    <p class="footer-tagline">Building beautiful solutions for real problems.</p>
+                    <p class="footer-tagline">Digital Solutions. Real Results.</p>
                 </div>
             </div>
         </footer>
+            </main>
+        <section class="quote-strip"><div><strong>Have a project in mind?</strong><span>Digital Solutions. Real Results.</span></div><a href="https://wa.me/2348143824044" target="_blank" rel="noopener noreferrer">Get a quote →</a></section>
+<nav class="mobile-action-bar" aria-label="Quick contact"><a href="https://wa.me/2348143824044" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.1A8.5 8.5 0 1 1 20 11.5Z"/></svg><span>WhatsApp</span></a><a href="tel:+2348143824044" aria-label="Call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-3 2a15 15 0 0 0 6 6l2-3 5 2v4c0 1-1 2-2 2C10 20 4 14 3 5c0-1 1-2 2-2Z"/></svg><span>Call</span></a><a href="mailto:deanbydzyne@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Email</span></a></nav>
     </div>
 
     <!-- Vue.js 3 from CDN -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <!-- Anime.js for advanced animations -->
-    <script src="https://animejs.com/lib/anime.min.js"></script>
+    
     <!-- Main application script -->
-    <script src="js/app.js"></script>
+    <script defer src="js/app.js"></script>
 </body>
 </html>

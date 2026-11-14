@@ -205,6 +205,25 @@ createApp({
         // Toggle navigation menu
         toggleNavMenu() {
             this.showNavMenu = !this.showNavMenu;
+            document.body.classList.toggle('nav-open', this.showNavMenu);
+            if (this.showNavMenu) this.$nextTick(() => document.querySelector('.nav-menu-close').focus());
+            else document.querySelector('.floating-nav-btn').focus();
+        },
+        closeNavMenu() {
+            this.showNavMenu = false;
+            document.body.classList.remove('nav-open');
+            document.querySelector('.floating-nav-btn').focus();
+        },
+        handleNavKeydown(event) {
+            if (!this.showNavMenu) return;
+            if (event.key === 'Escape') { this.closeNavMenu(); return; }
+            if (event.key !== 'Tab') return;
+            const menu = document.getElementById('site-navigation');
+            const items = menu.querySelectorAll('a[href], button:not([disabled])');
+            if (!items.length) return;
+            const first = items[0], last = items[items.length - 1];
+            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
         },
         
         // Scroll to section and close navigation menu
@@ -361,6 +380,7 @@ createApp({
     
     beforeUnmount() {
         this.stopAutoRotate();
+        document.removeEventListener('keydown', this.handleNavKeydown);
     },
     
     watch: {

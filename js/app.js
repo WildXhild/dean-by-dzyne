@@ -271,7 +271,7 @@ createApp({
             submitButton.textContent = 'Sending...';
             
             // Submit to backend
-            const apiUrl = process.env.VUE_APP_API_URL || 'http://localhost:5000/api';
+            const apiUrl = window.DEAN_API_BASE_URL || 'http://localhost:5000/api';
             
             fetch(`${apiUrl}/contact`, {
                 method: 'POST',
@@ -350,10 +350,10 @@ createApp({
         this.startAutoRotate();
         
         // Add scroll-triggered animations
-        this.addScrollAnimations();
+        observeElements();
         
         // Add parallax effect to hero section
-        this.addParallaxEffect();
+        // Mobile parallax disabled; reveals are observer-driven.
         
         // Initialize sticky footer reveal animation
         this.initStickyFooter();

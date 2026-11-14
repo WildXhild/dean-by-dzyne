@@ -23,6 +23,7 @@
             <span class="nav-icon" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
 
+        <button class="nav-backdrop" :class="{ active: showNavMenu }" @click="closeNavMenu" aria-label="Close navigation"></button>
         <!-- FLOATING NAVIGATION MENU -->
         <div id="site-navigation" class="floating-nav-menu" :class="{ active: showNavMenu }" :aria-hidden="(!showNavMenu).toString()" role="dialog" aria-modal="true" aria-label="Main navigation">
             <button class="nav-menu-close" @click="closeNavMenu" aria-label="Close navigation menu">×</button>

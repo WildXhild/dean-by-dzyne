@@ -989,107 +989,163 @@ h4 {
     background-color: #ffffff !important;
 }
 
-.partners-marquee-wrapper {
-    position: relative;
+.partners-slideshow {
+    width: min(100% - 2rem, 920px);
+    margin: 0 auto;
+}
+
+.partners-slide-stage {
+    min-height: 300px;
     overflow: hidden;
-    padding: 0;
-    height: 280px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-.partners-marquee {
-    display: flex;
-    gap: var(--spacing-lg);
-    animation: marqueeScrollLeft 40s linear infinite;
-    padding: 0;
-    height: 100%;
-    align-items: stretch;
-}
-
-.partner-item {
-    flex-shrink: 0;
-    width: 500px;
-    min-width: 300px;
-    max-width: 90vw;
-    height: 100%;
-    display: flex;
-    box-sizing: border-box;
+    border-radius: 22px;
+    touch-action: pan-y;
 }
 
 .partner-card-new {
-    border-radius: 20px;
-    padding: var(--spacing-md);
-    display: flex;
-    gap: var(--spacing-md);
-    align-items: flex-start;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 200ms var(--motion-ease), opacity 200ms var(--motion-ease);
-    cursor: pointer;
     width: 100%;
-    height: 100%;
-}
-
-.partner-card-new:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    min-height: 300px;
+    padding: clamp(1rem, 3vw, 2rem);
+    border-radius: 22px;
+    display: grid;
+    grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+    color: #fff;
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.2);
 }
 
 .partner-image-new {
-    width: 180px;
-    height: 100%;
-    border-radius: 12px;
-    background-size: cover;
-    background-position: center;
-    flex-shrink: 0;
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.12);
 }
 
 .partner-info {
-    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xs);
+    align-items: flex-start;
+    gap: 0.75rem;
 }
 
-.partner-info h4 {
-    color: var(--color-white);
-    margin: 0;
-    font-size: 0.95rem;
+.partner-count {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.72rem;
     font-weight: 700;
+    letter-spacing: 0.14em;
+}
+
+.partner-info h3 {
+    color: #fff;
+    margin: 0;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    line-height: 1.15;
 }
 
 .partner-info p {
-    color: rgba(255, 255, 255, 0.95);
-    font-size: 0.85rem;
-    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.94);
+    font-size: 0.95rem;
+    line-height: 1.65;
     margin: 0;
 }
 
 .partner-website-link {
-    color: var(--color-white);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-top: var(--spacing-sm);
-    transition: opacity var(--transition-fast);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: background 200ms var(--motion-ease), color 200ms var(--motion-ease);
 }
 
 .partner-website-link:hover {
-    opacity: 0.8;
+    background: #fff;
+    color: #0A1A3F;
 }
 
-@keyframes marqueeScrollLeft {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
+.partners-slide-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem 0 0.25rem;
 }
 
-.partners-marquee-wrapper:hover .partners-marquee {
-    animation-play-state: paused;
+.partner-arrow {
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 50%;
+    background: rgba(10, 26, 63, 0.28);
+    color: #fff;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 200ms var(--motion-ease), background 200ms var(--motion-ease);
+}
+
+.partner-arrow:hover:not(:disabled) {
+    transform: scale(1.06);
+    background: rgba(10, 26, 63, 0.55);
+}
+
+.partner-arrow:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.partner-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+}
+
+.partner-dot {
+    width: 11px;
+    height: 11px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+    transition: transform 200ms var(--motion-ease), background 200ms var(--motion-ease);
+}
+
+.partner-dot.active {
+    background: #fff;
+    transform: scale(1.3);
+}
+
+.partner-arrow:focus-visible,
+.partner-dot:focus-visible,
+.partner-website-link:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+}
+
+.partner-slide-enter-active,
+.partner-slide-leave-active {
+    transition: opacity 220ms var(--motion-ease), transform 220ms var(--motion-ease);
+}
+
+.partner-slide-enter-from {
+    opacity: 0;
+    transform: translateX(18px);
+}
+
+.partner-slide-leave-to {
+    opacity: 0;
+    transform: translateX(-18px);
 }
 
 .social-link {
@@ -2540,3 +2596,48 @@ body { min-height:100dvh; background-attachment:scroll; }
 .navbar .logo-text { color:var(--navy); }
 .navbar.scrolled { background:rgba(10,26,63,.94); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
 .navbar.scrolled .logo-text { color:#fff; }
+
+
+/* Partner slideshow layout overrides */
+@media (max-width: 768px) {
+    .partners-slideshow {
+        width: 100%;
+    }
+
+    .partners-slide-stage {
+        min-height: 0;
+    }
+
+    .partner-card-new {
+        min-height: 0;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1.1rem;
+    }
+
+    .partner-image-new {
+        width: 100%;
+        height: 170px;
+        max-width: 100%;
+    }
+
+    .partner-info {
+        align-items: center;
+        text-align: center;
+    }
+
+    .partner-info p {
+        font-size: 0.9rem;
+    }
+
+    .partners-slide-controls {
+        padding-top: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .partner-slide-enter-active,
+    .partner-slide-leave-active {
+        transition: none;
+    }
+}

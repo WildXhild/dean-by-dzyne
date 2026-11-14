@@ -370,6 +370,7 @@ createApp({
         
         // Initialize sticky footer reveal animation
         this.initStickyFooter();
+        document.addEventListener('keydown', this.handleNavKeydown);
     },
     
     beforeUnmount() {

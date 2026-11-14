@@ -2521,3 +2521,17 @@ body { min-height:100dvh; background-attachment:scroll; }
   body.keyboard-open { padding-bottom:0; }
   body.keyboard-open .mobile-action-bar { transform:translateY(110%); pointer-events:none; }
 }
+
+.footer-content { grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:start; }
+.contact-section { grid-template-columns:1fr; }
+.footer-content > .social-links { grid-column:1 / -1; }
+.navbar { position:sticky; }
+.navbar::after { content:""; position:absolute; left:0; bottom:0; height:2px; width:100%; background:var(--logo-blue); transform:scaleX(0); transform-origin:left; }
+.navbar.scrolled { background:rgba(10,26,63,.94); padding-block:7px; box-shadow:0 5px 22px rgba(4,13,34,.2); }
+.navbar.scrolled .logo-text { font-size:1.3rem; }
+.floating-nav-item[aria-current="location"] { background:rgba(11,79,208,.22); color:#fff; }
+@media (max-width:768px) { .footer-content { grid-template-columns:1fr; } .footer-content > .social-links { grid-column:auto; } }
+@supports (animation-timeline: scroll()) {
+  .navbar::after { animation:scroll-progress linear both; animation-timeline:scroll(root); }
+  @keyframes scroll-progress { to { transform:scaleX(1); } }
+}

@@ -407,7 +407,7 @@ function observeElements() {
 
     // Observe all service items, partner cards, etc.
     document.querySelectorAll(
-        '.service-item, .partner-card, .quality, .service-category'
+        '.service-item, .partner-card-new, .quality, .service-category'
     ).forEach(el => {
         observer.observe(el);
     });
@@ -429,7 +429,7 @@ style.textContent = `
     }
     
     .service-item.animate-in,
-    .partner-card.animate-in,
+    .partner-card-new.animate-in,
     .quality.animate-in,
     .service-category.animate-in {
         opacity: 1;
@@ -442,10 +442,10 @@ style.textContent = `
     .service-item:nth-child(4) { transition-delay: 0.3s; }
     .service-item:nth-child(5) { transition-delay: 0.4s; }
     
-    .partner-card:nth-child(2) { transition-delay: 0.1s; }
-    .partner-card:nth-child(3) { transition-delay: 0.2s; }
-    .partner-card:nth-child(4) { transition-delay: 0.3s; }
-    .partner-card:nth-child(5) { transition-delay: 0.4s; }
+    .partner-card-new:nth-child(2) { transition-delay: 0.1s; }
+    .partner-card-new:nth-child(3) { transition-delay: 0.2s; }
+    .partner-card-new:nth-child(4) { transition-delay: 0.3s; }
+    .partner-card-new:nth-child(5) { transition-delay: 0.4s; }
     
     .quality:nth-child(2) { transition-delay: 0.1s; }
     .quality:nth-child(3) { transition-delay: 0.2s; }
@@ -501,3 +501,14 @@ navStyle.textContent = `
     }
 `;
 document.head.appendChild(navStyle);
+
+
+// Keep the quick-contact bar clear of the on-screen mobile keyboard.
+if (window.visualViewport) {
+    const syncKeyboardState = () => {
+        const keyboardOpen = window.innerHeight - window.visualViewport.height > 140;
+        document.body.classList.toggle('keyboard-open', keyboardOpen);
+    };
+    window.visualViewport.addEventListener('resize', syncKeyboardState, { passive: true });
+    window.visualViewport.addEventListener('scroll', syncKeyboardState, { passive: true });
+}

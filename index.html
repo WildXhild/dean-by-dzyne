@@ -19,32 +19,32 @@
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a><div id="app">
         <!-- FLOATING NAVIGATION BUTTON -->
-        <button class="floating-nav-btn" @click="toggleNavMenu" title="Navigation Menu">
-            <span class="nav-icon">☰</span>
+        <button class="floating-nav-btn" @click="toggleNavMenu" :aria-expanded="showNavMenu.toString()" aria-controls="site-navigation" aria-label="Open navigation menu" title="Navigation Menu">
+            <span class="nav-icon" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
 
         <!-- FLOATING NAVIGATION MENU -->
-        <div class="floating-nav-menu" :class="{ active: showNavMenu }">
-            <button class="nav-menu-close" @click="toggleNavMenu">✕</button>
+        <div id="site-navigation" class="floating-nav-menu" :class="{ active: showNavMenu }" :aria-hidden="(!showNavMenu).toString()" role="dialog" aria-modal="true" aria-label="Main navigation">
+            <button class="nav-menu-close" @click="closeNavMenu" aria-label="Close navigation menu">×</button>
             <nav class="floating-nav-items">
                 <a href="#services" @click="scrollToAndCloseNav('services')" class="floating-nav-item">
-                    <span class="icon">📱</span>
+                    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/></svg></span>
                     <span>Services</span>
                 </a>
                 <a href="https://github.com/WildXhild" target="_blank" class="floating-nav-item">
-                    <span class="icon">💼</span>
+                    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3"/></svg></span>
                     <span>Portfolio</span>
                 </a>
                 <a href="#partners" @click="scrollToAndCloseNav('partners')" class="floating-nav-item">
-                    <span class="icon">🤝</span>
+                    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 12 3 3 5-5M3 8l4-4 4 4-4 4zM13 8l4-4 4 4-4 4z"/></svg></span>
                     <span>Our Partners</span>
                 </a>
                 <a href="#about" @click="scrollToAndCloseNav('about')" class="floating-nav-item">
-                    <span class="icon">ℹ️</span>
+                    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span>
                     <span>About</span>
                 </a>
                 <a href="#contact" @click="scrollToAndCloseNav('contact')" class="floating-nav-item">
-                    <span class="icon">📧</span>
+                    <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
                     <span>Contact</span>
                 </a>
             </nav>

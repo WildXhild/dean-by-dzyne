@@ -5,6 +5,7 @@ createApp({
         return {
             currentServiceIndex: 0,
             currentPartnerIndex: 0,
+            partnerTouchStartX: 0,
             formSuccess: false,
             marqueeAnimations: {},
             showNavMenu: false,
@@ -191,6 +192,27 @@ createApp({
         
         selectPartner(index) {
             this.currentPartnerIndex = index;
+        },
+
+        nextPartner() {
+            if (!this.partners.length) return;
+            this.currentPartnerIndex = (this.currentPartnerIndex + 1) % this.partners.length;
+        },
+
+        previousPartner() {
+            if (!this.partners.length) return;
+            this.currentPartnerIndex = (this.currentPartnerIndex - 1 + this.partners.length) % this.partners.length;
+        },
+
+        startPartnerSwipe(event) {
+            this.partnerTouchStartX = event.changedTouches[0].clientX;
+        },
+
+        endPartnerSwipe(event) {
+            const deltaX = event.changedTouches[0].clientX - this.partnerTouchStartX;
+            if (Math.abs(deltaX) < 45) return;
+            if (deltaX < 0) this.nextPartner();
+            else this.previousPartner();
         },
         
         scrollTo(sectionId) {

@@ -2508,3 +2508,16 @@ body.nav-open { overflow:hidden; }
 @media (prefers-reduced-motion:reduce) { .partners-marquee,.marquee-content { animation:none!important; } }
 
 .partner-image-new { display:block; object-fit:cover; background:var(--off-white); }
+
+body { min-height:100dvh; background-attachment:scroll; }
+.floating-nav-menu { max-height:100dvh; }
+.service-category,.service-item,.quality,.partner-card-new,.portfolio-card,.btn-primary,.btn-submit,.social-icon {
+  transition-property:transform,opacity;
+  transition-duration:var(--motion-fast);
+  transition-timing-function:var(--motion-ease);
+}
+.partner-image-new { height:100%; }
+@media (max-width:768px) {
+  body.keyboard-open { padding-bottom:0; }
+  body.keyboard-open .mobile-action-bar { transform:translateY(110%); pointer-events:none; }
+}
